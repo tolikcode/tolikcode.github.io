@@ -11,8 +11,5 @@
       <a href="{{ .Site.BaseURL }}/post" class="btn btn-primary btn-block btn-lg">View All {{ len (where .Site.Pages "Section" "post") }} Articles →</a>
     </div>
   </div>
-  <div class="col-sm-4">
-    {{ partial "sidebar.html" . }}
-  </div>
 </div>
 {{ partial "layout_end.html" . }}
