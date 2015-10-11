@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://tolikcode.github.io//stylesheets/shiori.css">
+    <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://tolikcode.github.io//favicon.ico">
+    <title>Hosting Hugo generated site on GitHub | Tolik Code</title>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="http://tolikcode.github.io/" class="navbar-brand">Tolik Code</a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <li><a href="http://tolikcode.github.io//post">Archive</a></li>
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            <li>
+  <ul class="soc">
+    <li><a class="soc-github" href="https:/github.com/tolikcode"></a></li>
+    <li><a class="soc-email1 soc-icon-last" href="mailto:tolikcode@gmail.com"></a></li>
+  </ul>
+</li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="post-header">
+      <h1 class="post-title-main">Hosting Hugo generated site on GitHub</h1>
+      <p class="text-muted">Oct 4, 2015</p>
+
+    </div>
+    <div class="post-content">
+      
+
+<p>The reason I like Hugo so much is partly because of its great <a href="http://gohugo.io/overview/introduction/">documentation</a>. Yet I do believe that  <a href="http://gohugo.io/tutorials/github-pages-blog/">Hosting on GitHub</a> tutorial can be improved a little. It contains some redundant information on how to create a blog with Hugo and focuses on GitHub <em>Project</em> Pages for the most part. It does provide you with steps on how to host a personal blog on GitHub <em>User</em> Pages, but this solution requires separate repositories for your blog&rsquo;s source and generated static result. And with <code>git subtree</code> you can do it in one GitHub repo. It took me some time to configure everything especially that I knew little about <code>git subtree</code>. So I&rsquo;ve decided to write my own article on GitHub publishing.</p>
+
+<h2 id="prerequisites:adf90425c55aea6c37dbfd72255f1e59">Prerequisites</h2>
+
+<p>I assume that you are familiar with Git and have already generated a <a href="https://gohugo.io/overview/quickstart/">Hugo website</a>.
+You are going to have something like this in your website&rsquo;s directory:</p>
+
+<pre><code class="language-bash">archetypes
+content
+data
+layouts
+public
+static
+themes
+config.toml
+README.md
+</code></pre>
+
+<p><code>public</code> folder contains your generated static website. I&rsquo;ve also added <code>README.md</code>.</p>
+
+<h2 id="goal:adf90425c55aea6c37dbfd72255f1e59">Goal</h2>
+
+<p>So you want to host your Hugo generated website on GitHub Pages. It&rsquo;s natural to put your site&rsquo;s sources in a GitHub repo too.
+With <a href="https://jekyllrb.com/">Jekyll</a> you can just put everything in your <code>master</code> branch and GitHub would handle everything else for you.
+In the case of Hugo we need to do some additional work as GitHub requires your static website to be in the root of the <code>master</code> branch.</p>
+
+<p>The idea is to have the contents of <code>public</code> folder on your <code>master</code> branch, whereas other source files on some other branch (e.g. <code>source</code>). The <code>public</code> folder on your <code>source</code> branch is going to mirror the <code>master</code> branch. This can be achieved with <code>git subtree</code>. I encourage you to read more about <code>git subtree</code>, however if you don&rsquo;t feel like reading much today or just want to get results faster, here&rsquo;s a tutorial for you.</p>
+
+<h2 id="solution:adf90425c55aea6c37dbfd72255f1e59">Solution</h2>
+
+<p>I usually use <a href="https://www.sourcetreeapp.com/">SourceTree</a> for most of my Git related work. Unfortunately SourceTree doesn&rsquo;t work very well with Git subtrees. Don&rsquo;t worry anyway. There are just a few commands you need to type in your terminal.</p>
+
+<p>Initialize the <code>master</code> branch:</p>
+
+<pre><code class="language-bash"># Unstage all files
+git rm -rf --cached .
+
+git add README.md
+
+git commit -m &quot;Initial commit on master&quot;
+</code></pre>
+
+<p>Commit everything to an orphan <code>source</code> branch:</p>
+
+<pre><code class="language-bash">git checkout --orphan source
+
+# Remove the public folder to make room for the master branch subtree
+rm -rf public
+
+git add .
+
+git commit -m &quot;Initial commit on source branch&quot;
+</code></pre>
+
+<p>Push everything to GitHub:</p>
+
+<pre><code class="language-bash">git remote add origin https://github.com/tolikcode/tolikcode.github.io.
+
+git push origin master
+
+git push origin source
+</code></pre>
+
+<p>This is the most crucial command in this article. Add the <code>master</code> branch as a <code>public</code> folder:</p>
+
+<pre><code class="language-bash">git subtree add --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master --squash
+</code></pre>
+
+<h2 id="workflow:adf90425c55aea6c37dbfd72255f1e59">Workflow</h2>
+
+<p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:</p>
+
+<pre><code class="language-bash">hugo -t ThemeName
+git add -A
+git commit -m &quot;Updating site&quot; &amp;&amp; git push origin source
+</code></pre>
+
+<p>If you have done everything correctly your Git commit history should look something like this:</p>
+
+<p>
+<figure class="center">
+    
+        <img src="/images/HugoOnGithubHistory.png" />
+    
+    
+</figure>
+</p>
+
+<p>When your changes are ready to see the world just publish them with <code>subtree push</code> command to the <code>master</code>.</p>
+
+<pre><code class="language-bash">git subtree push --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master
+</code></pre>
+
+<p>Now you can find your shiny new website at <code>http://yourusername.github.io/</code>.</p>
+
+    </div>
+    <div class="post-footer">
+      <a href="http://tolikcode.github.io//post" class="btn btn-primary btn-block btn-lg">View All 1 Articles →</a>
+
+    </div>
+    
+  </div>
+</div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          &copy; 2015.
+Built with <a href="http://gohugo.io/">Hugo</a>.
+
+        </div>
+      </div>
+    </div>
+    <script src="http://tolikcode.github.io//javascripts/shiori.js"></script>
+    
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+  </body>
+</html>
+
