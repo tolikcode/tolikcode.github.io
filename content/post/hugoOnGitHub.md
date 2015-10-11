@@ -34,7 +34,7 @@ The idea is to have the contents of `public` folder on your `master` branch, whe
 
 ## Solution
 
-I usually use [SourceTree](https://www.sourcetreeapp.com/) for most of my Git related work. Unfortunately SourceTree doesn't work very well with Git subtrees. Don't worry anyway. There are just a few commands you need to type in your terminal.
+I usually use [SourceTree](https://www.sourcetreeapp.com/) for most of my Git related work. Unfortunately SourceTree doesn't work very well with [Git](https://jira.atlassian.com/browse/SRCTREEWIN-1643) [subtrees](https://jira.atlassian.com/browse/SRCTREEWIN-1819). Don't worry anyway. There are just a few commands you need to type in your terminal.
 
 Initialize the `master` branch:
 
