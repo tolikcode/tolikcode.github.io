@@ -6,8 +6,53 @@
     <description>Recent content in Posts on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 04 Oct 2015 21:01:22 +0300</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2015 23:23:55 +0300</lastBuildDate>
     <atom:link href="http://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Logging in Universal Windows applications</title>
+      <link>http://tolikcode.github.io/post/uwpLogging/</link>
+      <pubDate>Sat, 24 Oct 2015 23:23:55 +0300</pubDate>
+      
+      <guid>http://tolikcode.github.io/post/uwpLogging/</guid>
+      <description>
+
+&lt;p&gt;As a Windows Phone developer I always envied Android developers with their quite handy out of the box logging solution, namely LogCat. It allows both to output debug information in real time and to write it somewhere permanently.&lt;/p&gt;
+
+&lt;p&gt;With Windows 10 being released I was hoping to have something similar to Android LogCat in Windows. Alas, there are a few changes to ETW Tracing and that&amp;rsquo;s all. If your have a Windows Phone / Window 8 development experience there is going to be nothing new for you.&lt;/p&gt;
+
+&lt;h2 id=&#34;etw-tracing:2856d4dc02b2154b98472d85debbb153&#34;&gt;ETW Tracing&lt;/h2&gt;
+
+&lt;p&gt;The Microsoft way for logging in UWP applications is via &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/windows/desktop/aa363668&#34;&gt;Event Tracing for Windows&lt;/a&gt;. You can find a corresponding sample from Microsoft on &lt;a href=&#34;https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/Logging&#34;&gt;GitHub&lt;/a&gt;. This technology has been around both in desktop and mobile versions of Windows for quite some time already.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeGreen&#34;&gt;+ &lt;/span&gt; Out of the box. No need to reference any additional libraries.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeGreen&#34;&gt;+ &lt;/span&gt; Semantic logging. Your logs are going to have a consistent structure that makes it easier to analyze them.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeRed&#34;&gt;- &lt;/span&gt; Requires an effort to configure.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeRed&#34;&gt;- &lt;/span&gt; By default the result is going to be &lt;code&gt;*.etl&lt;/code&gt; files that have to be decoded.&lt;/p&gt;
+
+&lt;h2 id=&#34;metrolog:2856d4dc02b2154b98472d85debbb153&#34;&gt;MetroLog&lt;/h2&gt;
+
+&lt;p&gt;There are many different third party libraries for logging in Universal applications. The most popular one is &lt;a href=&#34;https://www.nuget.org/packages/MetroLog/&#34;&gt;MetroLog&lt;/a&gt;. Log4net is a default logging solution in desktop applications for me. MetroLog is a log4net for Windows Universal applications.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeGreen&#34;&gt;+ &lt;/span&gt; Easy to configure.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeGreen&#34;&gt;+ &lt;/span&gt; Plain old text files. MetroLog can output to different targets, but it&amp;rsquo;s really easy to configure it to write everything into a &lt;code&gt;*.txt&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;p&gt;&lt;span class=&#34;largeRed&#34;&gt;- &lt;/span&gt; Additional reference in your application.&lt;/p&gt;
+
+&lt;h2 id=&#34;retrieving-logs-from-a-windows-phone:2856d4dc02b2154b98472d85debbb153&#34;&gt;Retrieving logs from a Windows phone&lt;/h2&gt;
+
+&lt;p&gt;Whether you&amp;rsquo;re doing ETW tracing or using a third party library (or your own custom solution) you are going to need to retrieve your logs from a device. You can upload them to some server or just prompt users to email them directly to you. In case you have a physical access to a test device
+the easiest and most convenient way is to use &lt;a href=&#34;https://wptools.codeplex.com&#34;&gt;Windows Phone Power Tools&lt;/a&gt;. I&amp;rsquo;ve tested it with Windows 10 Mobile Insider Preview and it works great.&lt;/p&gt;
+
+&lt;h2 id=&#34;application-insights:2856d4dc02b2154b98472d85debbb153&#34;&gt;Application Insights&lt;/h2&gt;
+
+&lt;p&gt;In Visual Studio 2015 Microsoft has added &lt;a href=&#34;https://azure.microsoft.com/en-us/services/application-insights/&#34;&gt;Application Insights&lt;/a&gt; into Universal App project template. Application Insights is a comprehensive application monitoring solution available in Azure cloud. It allows to monitor the availability, performance, and usage metrics of different applications and services, and it might help you to solve the problems you wanted to solve with logging.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Hosting Hugo generated site on GitHub</title>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://tolikcode.github.io//stylesheets/shiori.css">
+    <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://tolikcode.github.io//favicon.ico">
+    <title>Logging in Universal Windows applications | Tolik Code</title>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="http://tolikcode.github.io/" class="navbar-brand">Tolik Code</a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <li><a href="http://tolikcode.github.io//post">Archive</a></li>
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            <li>
+  <ul class="soc">
+    <li><a class="soc-github" href="https:/github.com/tolikcode"></a></li>
+    <li><a class="soc-email1 soc-icon-last" href="mailto:tolikcode@gmail.com"></a></li>
+  </ul>
+</li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="post-header">
+      <h1 class="post-title-main">Logging in Universal Windows applications</h1>
+      <p class="text-muted">Oct 24, 2015</p>
+
+    </div>
+    <div class="post-content">
+      
+
+<p>As a Windows Phone developer I always envied Android developers with their quite handy out of the box logging solution, namely LogCat. It allows both to output debug information in real time and to write it somewhere permanently.</p>
+
+<p>With Windows 10 being released I was hoping to have something similar to Android LogCat in Windows. Alas, there are a few changes to ETW Tracing and that&rsquo;s all. If your have a Windows Phone / Window 8 development experience there is going to be nothing new for you.</p>
+
+<h2 id="etw-tracing:2856d4dc02b2154b98472d85debbb153">ETW Tracing</h2>
+
+<p>The Microsoft way for logging in UWP applications is via <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa363668">Event Tracing for Windows</a>. You can find a corresponding sample from Microsoft on <a href="https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/Logging">GitHub</a>. This technology has been around both in desktop and mobile versions of Windows for quite some time already.</p>
+
+<p><span class="largeGreen">+ </span> Out of the box. No need to reference any additional libraries.</p>
+
+<p><span class="largeGreen">+ </span> Semantic logging. Your logs are going to have a consistent structure that makes it easier to analyze them.</p>
+
+<p><span class="largeRed">- </span> Requires an effort to configure.</p>
+
+<p><span class="largeRed">- </span> By default the result is going to be <code>*.etl</code> files that have to be decoded.</p>
+
+<h2 id="metrolog:2856d4dc02b2154b98472d85debbb153">MetroLog</h2>
+
+<p>There are many different third party libraries for logging in Universal applications. The most popular one is <a href="https://www.nuget.org/packages/MetroLog/">MetroLog</a>. Log4net is a default logging solution in desktop applications for me. MetroLog is a log4net for Windows Universal applications.</p>
+
+<p><span class="largeGreen">+ </span> Easy to configure.</p>
+
+<p><span class="largeGreen">+ </span> Plain old text files. MetroLog can output to different targets, but it&rsquo;s really easy to configure it to write everything into a <code>*.txt</code> file.</p>
+
+<p><span class="largeRed">- </span> Additional reference in your application.</p>
+
+<h2 id="retrieving-logs-from-a-windows-phone:2856d4dc02b2154b98472d85debbb153">Retrieving logs from a Windows phone</h2>
+
+<p>Whether you&rsquo;re doing ETW tracing or using a third party library (or your own custom solution) you are going to need to retrieve your logs from a device. You can upload them to some server or just prompt users to email them directly to you. In case you have a physical access to a test device
+the easiest and most convenient way is to use <a href="https://wptools.codeplex.com">Windows Phone Power Tools</a>. I&rsquo;ve tested it with Windows 10 Mobile Insider Preview and it works great.</p>
+
+<h2 id="application-insights:2856d4dc02b2154b98472d85debbb153">Application Insights</h2>
+
+<p>In Visual Studio 2015 Microsoft has added <a href="https://azure.microsoft.com/en-us/services/application-insights/">Application Insights</a> into Universal App project template. Application Insights is a comprehensive application monitoring solution available in Azure cloud. It allows to monitor the availability, performance, and usage metrics of different applications and services, and it might help you to solve the problems you wanted to solve with logging.</p>
+
+    </div>
+    <div class="post-footer">
+      <a href="http://tolikcode.github.io//post" class="btn btn-primary btn-block btn-lg">View All 2 Articles →</a>
+
+    </div>
+    
+  </div>
+</div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          &copy; 2015.
+Built with <a href="http://gohugo.io/">Hugo</a>.
+
+        </div>
+      </div>
+    </div>
+    <script src="http://tolikcode.github.io//javascripts/shiori.js"></script>
+    
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+  </body>
+</html>
+
