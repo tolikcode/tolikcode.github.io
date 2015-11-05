@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://tolikcode.github.io//stylesheets/shiori.css">
+    <link rel="stylesheet" href="http://tolikcode.github.io/stylesheets/shiori.css">
     <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="http://tolikcode.github.io//favicon.ico">
+    <link rel="shortcut icon" href="http://tolikcode.github.io/favicon.ico">
     <title>Hosting Hugo generated site on GitHub | Tolik Code</title>
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
@@ -28,11 +28,11 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-          <a href="http://tolikcode.github.io/" class="navbar-brand">Tolik Code</a>
+          <a href="http://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
         </div>
         <div class="collapse navbar-collapse js-navbar-collapse">
           <ul class="navbar-nav nav">
-            <li><a href="http://tolikcode.github.io//post">Archive</a></li>
+            <li><a href="http://tolikcode.github.io/post">Archive</a></li>
 
           </ul>
           <ul class="navbar-nav nav navbar-right">
@@ -129,12 +129,12 @@ git push origin source
 
 <h2 id="workflow:adf90425c55aea6c37dbfd72255f1e59">Workflow</h2>
 
-<p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:</p>
-
-<pre><code class="language-bash">hugo -t ThemeName
+<p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:
+~~~ bash
+hugo -t ThemeName
 git add -A
-git commit -m &quot;Updating site&quot; &amp;&amp; git push origin source
-</code></pre>
+git commit -m &ldquo;Updating site&rdquo; &amp;&amp; git push origin source
+~~~</p>
 
 <p>If you have done everything correctly your Git commit history should look something like this:</p>
 
@@ -147,16 +147,16 @@ git commit -m &quot;Updating site&quot; &amp;&amp; git push origin source
 </figure>
 </p>
 
-<p>When your changes are ready to see the world just publish them with <code>subtree push</code> command to the <code>master</code>.</p>
-
-<pre><code class="language-bash">git subtree push --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master
-</code></pre>
+<p>When your changes are ready to see the world just publish them with <code>subtree push</code> command to the <code>master</code>.
+~~~ bash
+git subtree push &ndash;prefix=public <a href="https://github.com/tolikcode/tolikcode.github.io.git">https://github.com/tolikcode/tolikcode.github.io.git</a> master
+~~~</p>
 
 <p>Now you can find your shiny new website at <code>http://yourusername.github.io/</code>.</p>
 
     </div>
     <div class="post-footer">
-      <a href="http://tolikcode.github.io//post" class="btn btn-primary btn-block btn-lg">View All 2 Articles →</a>
+      <a href="http://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 2 Articles →</a>
 
     </div>
     
@@ -170,7 +170,7 @@ Built with <a href="http://gohugo.io/">Hugo</a>.
         </div>
       </div>
     </div>
-    <script src="http://tolikcode.github.io//javascripts/shiori.js"></script>
+    <script src="http://tolikcode.github.io/javascripts/shiori.js"></script>
     
 
 
