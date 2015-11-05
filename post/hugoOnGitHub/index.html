@@ -85,7 +85,7 @@ README.md
 With <a href="https://jekyllrb.com/">Jekyll</a> you can just put everything in your <code>master</code> branch and GitHub would handle everything else for you.
 In the case of Hugo we need to do some additional work as GitHub requires your static website to be in the root of the <code>master</code> branch.</p>
 
-<p>The idea is to have the contents of <code>public</code> folder on your <code>master</code> branch, whereas other source files on some other branch (e.g. <code>source</code>). The <code>public</code> folder on your <code>source</code> branch is going to mirror the <code>master</code> branch. This can be achieved with <code>git subtree</code>. I encourage you to read more about <code>git subtree</code>, however if you don&rsquo;t feel like reading much today or just want to get results faster, here&rsquo;s a tutorial for you.</p>
+<p>The idea is to have the contents of <code>public</code> folder on your <code>master</code> branch, whereas other source files on some other orphan branch (e.g. <code>source</code>). The <code>public</code> folder on your <code>source</code> branch is going to mirror the <code>master</code> branch. This can be achieved with <code>git subtree</code>. I encourage you to read more about <code>git subtree</code>, however if you don&rsquo;t feel like reading much today or just want to get results faster, here&rsquo;s a tutorial for you.</p>
 
 <h2 id="solution:adf90425c55aea6c37dbfd72255f1e59">Solution</h2>
 
@@ -129,28 +129,24 @@ git push origin source
 
 <h2 id="workflow:adf90425c55aea6c37dbfd72255f1e59">Workflow</h2>
 
-<p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:
-~~~ bash
-hugo -t ThemeName
+<p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:</p>
+
+<pre><code class="language-bash">hugo -t ThemeName
 git add -A
-git commit -m &ldquo;Updating site&rdquo; &amp;&amp; git push origin source
-~~~</p>
+git commit -m &quot;Updating site&quot; &amp;&amp; git push origin source
+</code></pre>
 
 <p>If you have done everything correctly your Git commit history should look something like this:</p>
 
-<p>
-<figure class="center">
-    
-        <img src="/images/HugoOnGithubHistory.png" />
-    
-    
-</figure>
-</p>
+<p><div class="center" markdown="1">
+    <img src="/images/HugoOnGithubHistory.png" alt="Git commit history">
+</div>
+<p/></p>
 
-<p>When your changes are ready to see the world just publish them with <code>subtree push</code> command to the <code>master</code>.
-~~~ bash
-git subtree push &ndash;prefix=public <a href="https://github.com/tolikcode/tolikcode.github.io.git">https://github.com/tolikcode/tolikcode.github.io.git</a> master
-~~~</p>
+<p>When your changes are ready to see the world just publish them with <code>subtree push</code> command to the <code>master</code>.</p>
+
+<pre><code class="language-bash">git subtree push --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master
+</code></pre>
 
 <p>Now you can find your shiny new website at <code>http://yourusername.github.io/</code>.</p>
 

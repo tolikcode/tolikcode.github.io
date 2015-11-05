@@ -88,7 +88,7 @@ README.md
 With &lt;a href=&#34;https://jekyllrb.com/&#34;&gt;Jekyll&lt;/a&gt; you can just put everything in your &lt;code&gt;master&lt;/code&gt; branch and GitHub would handle everything else for you.
 In the case of Hugo we need to do some additional work as GitHub requires your static website to be in the root of the &lt;code&gt;master&lt;/code&gt; branch.&lt;/p&gt;
 
-&lt;p&gt;The idea is to have the contents of &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;master&lt;/code&gt; branch, whereas other source files on some other branch (e.g. &lt;code&gt;source&lt;/code&gt;). The &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;source&lt;/code&gt; branch is going to mirror the &lt;code&gt;master&lt;/code&gt; branch. This can be achieved with &lt;code&gt;git subtree&lt;/code&gt;. I encourage you to read more about &lt;code&gt;git subtree&lt;/code&gt;, however if you don&amp;rsquo;t feel like reading much today or just want to get results faster, here&amp;rsquo;s a tutorial for you.&lt;/p&gt;
+&lt;p&gt;The idea is to have the contents of &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;master&lt;/code&gt; branch, whereas other source files on some other orphan branch (e.g. &lt;code&gt;source&lt;/code&gt;). The &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;source&lt;/code&gt; branch is going to mirror the &lt;code&gt;master&lt;/code&gt; branch. This can be achieved with &lt;code&gt;git subtree&lt;/code&gt;. I encourage you to read more about &lt;code&gt;git subtree&lt;/code&gt;, however if you don&amp;rsquo;t feel like reading much today or just want to get results faster, here&amp;rsquo;s a tutorial for you.&lt;/p&gt;
 
 &lt;h2 id=&#34;solution:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Solution&lt;/h2&gt;
 
@@ -132,28 +132,24 @@ git push origin source
 
 &lt;h2 id=&#34;workflow:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Workflow&lt;/h2&gt;
 
-&lt;p&gt;That&amp;rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the &lt;code&gt;source&lt;/code&gt; branch:
-~~~ bash
-hugo -t ThemeName
+&lt;p&gt;That&amp;rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the &lt;code&gt;source&lt;/code&gt; branch:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;hugo -t ThemeName
 git add -A
-git commit -m &amp;ldquo;Updating site&amp;rdquo; &amp;amp;&amp;amp; git push origin source
-~~~&lt;/p&gt;
+git commit -m &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push origin source
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;If you have done everything correctly your Git commit history should look something like this:&lt;/p&gt;
 
-&lt;p&gt;
-&lt;figure class=&#34;center&#34;&gt;
-    
-        &lt;img src=&#34;http://tolikcode.github.io/images/HugoOnGithubHistory.png&#34; /&gt;
-    
-    
-&lt;/figure&gt;
-&lt;/p&gt;
+&lt;p&gt;&lt;div class=&#34;center&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;http://tolikcode.github.io/images/HugoOnGithubHistory.png&#34; alt=&#34;Git commit history&#34;&gt;
+&lt;/div&gt;
+&lt;p/&gt;&lt;/p&gt;
 
-&lt;p&gt;When your changes are ready to see the world just publish them with &lt;code&gt;subtree push&lt;/code&gt; command to the &lt;code&gt;master&lt;/code&gt;.
-~~~ bash
-git subtree push &amp;ndash;prefix=public &lt;a href=&#34;https://github.com/tolikcode/tolikcode.github.io.git&#34;&gt;https://github.com/tolikcode/tolikcode.github.io.git&lt;/a&gt; master
-~~~&lt;/p&gt;
+&lt;p&gt;When your changes are ready to see the world just publish them with &lt;code&gt;subtree push&lt;/code&gt; command to the &lt;code&gt;master&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git subtree push --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now you can find your shiny new website at &lt;code&gt;http://yourusername.github.io/&lt;/code&gt;.&lt;/p&gt;
 </description>
