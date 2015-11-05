@@ -29,7 +29,7 @@ So you want to host your Hugo generated website on GitHub Pages. It's natural to
 With [Jekyll](https://jekyllrb.com/) you can just put everything in your `master` branch and GitHub would handle everything else for you.
 In the case of Hugo we need to do some additional work as GitHub requires your static website to be in the root of the `master` branch.
 
-The idea is to have the contents of `public` folder on your `master` branch, whereas other source files on some other branch (e.g. `source`). The `public` folder on your `source` branch is going to mirror the `master` branch. This can be achieved with `git subtree`. I encourage you to read more about `git subtree`, however if you don't feel like reading much today or just want to get results faster, here's a tutorial for you.
+The idea is to have the contents of `public` folder on your `master` branch, whereas other source files on some other orphan branch (e.g. `source`). The `public` folder on your `source` branch is going to mirror the `master` branch. This can be achieved with `git subtree`. I encourage you to read more about `git subtree`, however if you don't feel like reading much today or just want to get results faster, here's a tutorial for you.
 
 ## Solution
 
@@ -78,6 +78,7 @@ git subtree add --prefix=public https://github.com/tolikcode/tolikcode.github.io
 ## Workflow
 
 That's it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the `source` branch:
+
 ~~~ bash
 hugo -t ThemeName
 git add -A
@@ -86,9 +87,13 @@ git commit -m "Updating site" && git push origin source
 
 If you have done everything correctly your Git commit history should look something like this:
 
-{{< figure src="/images/HugoOnGithubHistory.png" class="center" >}}
+<div class="center" markdown="1">
+	<img src="/images/HugoOnGithubHistory.png" alt="Git commit history">
+</div>
+<p/>
 
 When your changes are ready to see the world just publish them with `subtree push` command to the `master`.
+
 ~~~ bash
 git subtree push --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master
 ~~~
