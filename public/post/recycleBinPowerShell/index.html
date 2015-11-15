@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://tolikcode.github.io/stylesheets/shiori.css">
+    <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://tolikcode.github.io/favicon.ico">
+    <title>Taking the trash out with PowerShell | Tolik Code</title>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="http://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <li><a href="http://tolikcode.github.io/post">Archive</a></li>
+<li><a href="http://tolikcode.github.io/about">About</a></li>
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            <li>
+  <ul class="soc">
+    <li><a class="soc-github" href="https:/github.com/tolikcode"></a></li>
+    <li><a class="soc-email1 soc-icon-last" href="mailto:tolikcode@gmail.com"></a></li>
+  </ul>
+</li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="post-header">
+      <h1 class="post-title-main">Taking the trash out with PowerShell</h1>
+      <p class="text-muted">Nov 15, 2015</p>
+
+    </div>
+    <div class="post-content">
+      
+
+<p>Many Windows users tend to store all of their old unnecessary files in the Recycle Bin. However, it just irritates me to know that files I almost definitely won&rsquo;t ever need are still taking space up on my hard drive. Immediately deleting these files bypassing the Recycle Bin is also not an option here.</p>
+
+<h2 id="goal:9f7a0d51badf47810d72f2123425000b">Goal</h2>
+
+<p>Recycle Bin should be something like a safety net in case of mistakenly deleted files and pretend it doesn&rsquo;t even exist otherwise. Windows automatically empties your Recycle Bin when it reaches certain size limit. In my opinion there should be a time limit additionally to the size limit in the Recycle Bin.
+There are third party applications that might help you with it. But people like me who are irritated by three month old files in their Recycle Bins are probably not going to be very happy with an application cluttering their computers just for this simple task. Fortunately you can do it with PowerShell.</p>
+
+<h2 id="solution:9f7a0d51badf47810d72f2123425000b">Solution</h2>
+
+<p>After some googling I&rsquo;ve found a detailed answer from <code>Indrek</code> on <a href="http://superuser.com/a/434673">SuperUser</a>. I liked the answer so much I decided to copy it here. It&rsquo;s also a nice opportunity to learn a bit of PowerShell.</p>
+
+<pre><code>ForEach ($Drive in Get-PSDrive -PSProvider FileSystem) {
+    $Path = $Drive.Name + ':\$Recycle.Bin'
+    Get-ChildItem $Path -Force -Recurse -ErrorAction SilentlyContinue |
+    Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } |
+    Remove-Item -Recurse
+}
+</code></pre>
+
+<p>You can find a line-by-line explanation of this script in the original post from <code>Indrek</code>. The script iterates over your disks, checks Recycle Bin folders and deletes all files that were put there more than some predefined period of time ago (in this case 30 days).</p>
+
+<p>Save this script as a text file with a <code>.ps1</code> extension. You can then use Task Scheduler to run this at regular intervals. Open Task Scheduler and create a new task with the following parameters:</p>
+
+<ol>
+<li>Under the &ldquo;General&rdquo; tab, enter a name and check the &ldquo;Run with highest privileges&rdquo; option.</li>
+<li>Under the &ldquo;Triggers&rdquo; tab, add a new trigger and set the task to run daily.</li>
+<li>Under the &ldquo;Actions&rdquo; tab, add a new action:
+
+<ul>
+<li>set the &ldquo;Program/script&rdquo; field to <code>powershell</code></li>
+<li>set the &ldquo;Add arguments&rdquo; field to <code>-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned -File &quot;C:\path\to\script.ps1&quot;</code></li>
+</ul></li>
+</ol>
+
+<p>I&rsquo;ve been using this solution for several months already and it works like a charm.</p>
+
+    </div>
+    <div class="post-footer">
+      <a href="http://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 3 Articles →</a>
+
+    </div>
+    
+  </div>
+</div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          &copy; 2015.
+Built with <a href="http://gohugo.io/">Hugo</a>.
+
+        </div>
+      </div>
+    </div>
+    <script src="http://tolikcode.github.io/javascripts/shiori.js"></script>
+    
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+  </body>
+</html>
+
