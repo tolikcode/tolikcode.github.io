@@ -6,8 +6,54 @@
     <description>Recent content in Posts on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Oct 2015 23:23:55 +0300</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2015 11:12:12 +0200</lastBuildDate>
     <atom:link href="http://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Taking the trash out with PowerShell</title>
+      <link>http://tolikcode.github.io/post/recycleBinPowerShell/</link>
+      <pubDate>Sun, 15 Nov 2015 11:12:12 +0200</pubDate>
+      
+      <guid>http://tolikcode.github.io/post/recycleBinPowerShell/</guid>
+      <description>
+
+&lt;p&gt;Many Windows users tend to store all of their old unnecessary files in the Recycle Bin. However, it just irritates me to know that files I almost definitely won&amp;rsquo;t ever need are still taking space up on my hard drive. Immediately deleting these files bypassing the Recycle Bin is also not an option here.&lt;/p&gt;
+
+&lt;h2 id=&#34;goal:9f7a0d51badf47810d72f2123425000b&#34;&gt;Goal&lt;/h2&gt;
+
+&lt;p&gt;Recycle Bin should be something like a safety net in case of mistakenly deleted files and pretend it doesn&amp;rsquo;t even exist otherwise. Windows automatically empties your Recycle Bin when it reaches certain size limit. In my opinion there should be a time limit additionally to the size limit in the Recycle Bin.
+There are third party applications that might help you with it. But people like me who are irritated by three month old files in their Recycle Bins are probably not going to be very happy with an application cluttering their computers just for this simple task. Fortunately you can do it with PowerShell.&lt;/p&gt;
+
+&lt;h2 id=&#34;solution:9f7a0d51badf47810d72f2123425000b&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;After some googling I&amp;rsquo;ve found a detailed answer from &lt;code&gt;Indrek&lt;/code&gt; on &lt;a href=&#34;http://superuser.com/a/434673&#34;&gt;SuperUser&lt;/a&gt;. I liked the answer so much I decided to copy it here. It&amp;rsquo;s also a nice opportunity to learn a bit of PowerShell.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ForEach ($Drive in Get-PSDrive -PSProvider FileSystem) {
+    $Path = $Drive.Name + &#39;:\$Recycle.Bin&#39;
+    Get-ChildItem $Path -Force -Recurse -ErrorAction SilentlyContinue |
+    Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } |
+    Remove-Item -Recurse
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can find a line-by-line explanation of this script in the original post from &lt;code&gt;Indrek&lt;/code&gt;. The script iterates over your disks, checks Recycle Bin folders and deletes all files that were put there more than some predefined period of time ago (in this case 30 days).&lt;/p&gt;
+
+&lt;p&gt;Save this script as a text file with a &lt;code&gt;.ps1&lt;/code&gt; extension. You can then use Task Scheduler to run this at regular intervals. Open Task Scheduler and create a new task with the following parameters:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Under the &amp;ldquo;General&amp;rdquo; tab, enter a name and check the &amp;ldquo;Run with highest privileges&amp;rdquo; option.&lt;/li&gt;
+&lt;li&gt;Under the &amp;ldquo;Triggers&amp;rdquo; tab, add a new trigger and set the task to run daily.&lt;/li&gt;
+&lt;li&gt;Under the &amp;ldquo;Actions&amp;rdquo; tab, add a new action:
+
+&lt;ul&gt;
+&lt;li&gt;set the &amp;ldquo;Program/script&amp;rdquo; field to &lt;code&gt;powershell&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;set the &amp;ldquo;Add arguments&amp;rdquo; field to &lt;code&gt;-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned -File &amp;quot;C:\path\to\script.ps1&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I&amp;rsquo;ve been using this solution for several months already and it works like a charm.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Logging in Universal Windows applications</title>
