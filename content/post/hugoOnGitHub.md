@@ -1,6 +1,6 @@
 +++
 date = "2015-10-04T21:01:22+03:00"
-title = "Hosting Hugo generated site on GitHub"
+title = "Hosting a Hugo generated site on GitHub"
 +++
 
 The reason I like Hugo so much is partly because of its great [documentation](http://gohugo.io/overview/introduction/). Yet I do believe that  [Hosting on GitHub](http://gohugo.io/tutorials/github-pages-blog/) tutorial can be improved a little. It contains some redundant information on how to create a blog with Hugo and focuses on GitHub *Project* Pages for the most part. It does provide you with steps on how to host a personal blog on GitHub *User* Pages, but this solution requires separate repositories for your blog's source and generated static result. And with `git subtree` you can do it in one GitHub repo. It took me some time to configure everything especially that I knew little about `git subtree`. So I've decided to write my own article on GitHub publishing.
