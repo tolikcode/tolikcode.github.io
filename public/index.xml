@@ -6,8 +6,56 @@
     <description>Recent content on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Nov 2015 11:12:12 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 05 Apr 2016 17:49:51 +0300</lastBuildDate>
     <atom:link href="http://tolikcode.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Yet another money manager</title>
+      <link>http://tolikcode.github.io/post/moneyman/</link>
+      <pubDate>Tue, 05 Apr 2016 17:49:51 +0300</pubDate>
+      
+      <guid>http://tolikcode.github.io/post/moneyman/</guid>
+      <description>
+
+&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. I needed a project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
+
+&lt;p&gt;I&amp;rsquo;m trying to control how much money I spend and I need a solution to help me with this. There are plenty of expense managers already, but all of them never quite meet everyone&amp;rsquo;s exact dreams and wants as everyone handles it a little differently. They are also either not free, or with ads, or provide no cloud synchronization.&lt;/p&gt;
+
+&lt;h2 id=&#34;project-description:7cced0d4ebc37f80338282bff66da165&#34;&gt;Project description&lt;/h2&gt;
+
+&lt;p&gt;The goal of this project is to help you track your expenses and incomes. I want to keep it as simple as possible. I&amp;rsquo;d like to have a handy way to note my expenses anywhere I go with my phone and to have it all aggregated in a convenient form on my PC later.
+The core of this solution is ASP.NET MVC application and a Web API for synchronization with an Android client. Android app is still in development.&lt;/p&gt;
+
+&lt;p&gt;Web application screenshot is here just to get your attention (Disclaimer: I&amp;rsquo;m not a designer).&lt;/p&gt;
+
+&lt;p&gt;&lt;div class=&#34;center standardBorder&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;http://tolikcode.github.io/images/moneyManScreen.PNG&#34;&gt;
+&lt;/div&gt;
+&lt;p/&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;how-can-it-interest-you:7cced0d4ebc37f80338282bff66da165&#34;&gt;How can it interest you?&lt;/h2&gt;
+
+&lt;p&gt;There are many similar projects. But none of them combine both of the following features:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Open source. You are free to fork it and modify it to meet your needs. You have a full control over your data. You can host your own copy anywhere you want.&lt;/li&gt;
+&lt;li&gt;Both Android and web clients with synchronization.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Some good alternatives:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.moneymanagerex.org&#34;&gt;Money Manager EX&lt;/a&gt; - a free, open-source, cross-platform personal finance software.  Unfortunately it doesn&amp;rsquo;t have a web client and DropBox is required for synchronization.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://web.andromoney.com&#34;&gt;AndroMoney&lt;/a&gt; - easy to use expense manager for Android, iOS and web.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;money-man-links:7cced0d4ebc37f80338282bff66da165&#34;&gt;Money Man links:&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/tolikcode/MoneyMan&#34;&gt;Sources on GitHub&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://moneyman.azurewebsites.net/&#34;&gt;Running application in Azure&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Taking the trash out with PowerShell</title>
