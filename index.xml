@@ -28,7 +28,7 @@ The core of this solution is ASP.NET MVC application and a Web API for synchroni
 
 &lt;p&gt;Web application screenshot is here just to get your attention (Disclaimer: I&amp;rsquo;m not a designer).&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;center standardBorder&#34; markdown=&#34;1&#34;&gt;
+&lt;p&gt;&lt;div class=&#34;standardBorder&#34; markdown=&#34;1&#34;&gt;
     &lt;img src=&#34;http://tolikcode.github.io/images/moneyManScreen.PNG&#34;&gt;
 &lt;/div&gt;
 &lt;p/&gt;&lt;/p&gt;
