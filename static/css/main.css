@@ -1,15 +1,29 @@
 .center {
-    display:flex;justify-content:center;align-items:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .largeGreen {
-    color:green;font-weight:bold;font-size:large
+    color:green;
+    font-weight:bold;
+    font-size:large
 }
 
 .largeRed {
-    color:red;font-weight:bold;font-size:large
+    color:red;
+    font-weight:bold;
+    font-size:large
 }
 
 .aboutAvatar {
-	float: left; margin-right: 20px; margin-bottom: 20px;
+	float: left;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.standardBorder {
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 6px
 }
