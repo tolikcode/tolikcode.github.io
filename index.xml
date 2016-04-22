@@ -17,7 +17,7 @@
       <guid>http://tolikcode.github.io/post/moneyman/</guid>
       <description>
 
-&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. I needed a project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
+&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. That&amp;rsquo;s why I needed to go through a bunch of MVA courses and to read Jon Galloway&amp;rsquo;s &amp;ldquo;Professional ASP.NET MVC 5&amp;rdquo; book to update my skills. Just to test myself I wanted to develop a small project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
 
 &lt;p&gt;I&amp;rsquo;m trying to control how much money I spend and I need a solution to help me with this. There are plenty of expense managers already, but all of them never quite meet everyone&amp;rsquo;s exact dreams and wants as everyone handles it a little differently. They are also either not free, or with ads, or provide no cloud synchronization.&lt;/p&gt;
 
@@ -118,7 +118,7 @@ There are third party applications that might help you with it. But people like 
 &lt;p&gt;&lt;p/&gt;
 My name is Anatoliy and this is my blog.&lt;/p&gt;
 
-&lt;p&gt;I&amp;rsquo;m a .NET developer from Ukraine. Most of my experience is in desktop and mobile application development (Universal Applications, WPF, Windows Phone, MS SQL), although I&amp;rsquo;ve also worked with web and cloud technologies (WCF, Azure). Besides that I have a keen interest in other modern technologies. I expect myself to write about my findings in this blog.&lt;/p&gt;
+&lt;p&gt;I&amp;rsquo;m a .NET developer from Ukraine. Most of my experience is in desktop and mobile application development (Universal Applications, WPF, Windows Phone, MS SQL), although I&amp;rsquo;ve also worked with web and cloud technologies (ASP.NET MVC, Azure). Besides that I have a keen interest in other modern technologies. I expect myself to write about my findings in this blog.&lt;/p&gt;
 
 &lt;p&gt;Email me at &lt;a href=&#34;mailto:tolikcode@gmail.com&#34;&gt;tolikcode@gmail.com&lt;/a&gt;.&lt;/p&gt;
 </description>
