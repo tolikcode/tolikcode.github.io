@@ -4,7 +4,7 @@ title = "Yet another money manager"
 
 +++
 
-I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. I needed a project that would be at least of some use for me and give me enough drive to finish it.
+I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. That's why I needed to go through a bunch of MVA courses and to read Jon Galloway's "Professional ASP.NET MVC 5" book to update my skills. Just to test myself I wanted to develop a small project that would be at least of some use for me and give me enough drive to finish it.
 
 <!--more-->
 
