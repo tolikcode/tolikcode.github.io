@@ -17,7 +17,7 @@
       <guid>http://tolikcode.github.io/post/moneyman/</guid>
       <description>
 
-&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. I needed a project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
+&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. That&amp;rsquo;s why I needed to go through a bunch of MVA courses and to read Jon Galloway&amp;rsquo;s &amp;ldquo;Professional ASP.NET MVC 5&amp;rdquo; book to update my skills. Just to test myself I wanted to develop a small project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
 
 &lt;p&gt;I&amp;rsquo;m trying to control how much money I spend and I need a solution to help me with this. There are plenty of expense managers already, but all of them never quite meet everyone&amp;rsquo;s exact dreams and wants as everyone handles it a little differently. They are also either not free, or with ads, or provide no cloud synchronization.&lt;/p&gt;
 
