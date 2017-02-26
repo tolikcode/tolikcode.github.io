@@ -17,10 +17,9 @@ The core of this solution is ASP.NET MVC application and a Web API for synchroni
 
 Web application screenshot is here just to get your attention (Disclaimer: I'm not a designer).
 
-<div class="standardBorder" markdown="1">
+<div class="standardBorder verticalMargins" markdown="1">
 	<img src="/images/moneyManScreen.PNG">
 </div>
-<p/>
 
 ## How can it interest you?
 

@@ -20,7 +20,7 @@ The Microsoft way for logging in UWP applications is via [Event Tracing for Wind
 
 ## MetroLog
 
-There are many different third party libraries for logging in Universal applications. The most popular one is [MetroLog](https://www.nuget.org/packages/MetroLog/). Log4net is a default logging solution in desktop applications for me. MetroLog is a log4net for Windows Universal applications.
+There are many different third party libraries for logging in Universal Windows applications. The most popular one is [MetroLog](https://www.nuget.org/packages/MetroLog/).
 
 <span class="largeGreen">+ </span> Easy to configure.
 

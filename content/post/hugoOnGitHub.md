@@ -87,10 +87,9 @@ git commit -m "Updating site" && git push origin source
 
 If you have done everything correctly your Git commit history should look something like this:
 
-<div class="center" markdown="1">
-	<img src="/images/HugoOnGithubHistory.png" alt="Git commit history">
+<div class="center verticalMargins" markdown="1">
+	<img src="/images/HugoOnGithubHistory.png">
 </div>
-<p/>
 
 When your changes are ready to see the world just publish them with `subtree push` command to the `master`.
 

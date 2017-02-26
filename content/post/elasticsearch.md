@@ -47,13 +47,13 @@ Looks very similar to any other logging library, doesn't it? However unlike most
 
 Elasticsearch would be a lot less attractive without [Kibana](https://www.elastic.co/products/kibana). Kibana is a powerful visualization platform on top of Elasticsearch. It allows to visualize and analyze your data with different graphs, charts, maps etc.
 
-<!--Kibana dashboard screenshot here -->
+<div class="standardBorder verticalMargins" markdown="1">
+	<img src="/images/kibanaDashboard.png">
+</div>
 
 There are situations when you have several logs and you want to aggregate data from them for analysis. For example in my current project I have at least three logs: Audit log for requests and responses (it's a WebApi application), Sync log for requests to external SOAP services and a general application log. They are written to SQL databases. You have to write a `UNION` query on several tables with different schemas to get a general picture of what's going on in the application. To achieve the same in Kibana you just need to name your Elasticsearch indices with a pattern - some common prefix. 
 
-Another helpful thing here is to use a `RequestId` through out your logs. You can generate a unique `RequestId` in some early stage of the request pipeline (HTTP module or ActionFilter) and then include it in each log entry in different logs. This allows to see everything that have happened during a particular request - request body, corresponding response, exceptions and any other events.
-
-<!-- Another Kibana screenshot here -->
+Another helpful thing here is to use a `RequestId` through out your logs. You can generate a unique `RequestId` in some early stage of the request pipeline (HTTP module, Middleware, ActionFilter) and then include it in each log entry in different logs. This allows to see everything that have happened during a particular request - request body, corresponding response, exceptions and any other events.
 
 In conclusion you can have a great logging system with Serilog, Elasticsearch and Kibana. And all this goodness works in .NET Core also.
 Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)
