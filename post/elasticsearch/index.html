@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://tolikcode.github.io/stylesheets/shiori.css">
+    <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://tolikcode.github.io/favicon.ico">
+    <title>Serilog and Elasticsearch | Tolik Code</title>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel="stylesheet" href="/css/main.css">
+
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="http://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <li><a href="http://tolikcode.github.io/post">Archive</a></li>
+<li><a href="http://tolikcode.github.io/about">About</a></li>
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            <li>
+  <ul class="soc">
+    <li><a class="soc-github" href="https:/github.com/tolikcode"></a></li>
+    <li><a class="soc-email1 soc-icon-last" href="mailto:tolikcode@gmail.com"></a></li>
+  </ul>
+</li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+
+<div class="row">
+  <div class="col-sm-8">
+    <div class="post-header">
+      <h1 class="post-title-main">Serilog and Elasticsearch</h1>
+      <p class="text-muted">Nov 29, 2016</p>
+
+    </div>
+    <div class="post-content">
+      
+
+<p>In my previous article about <a href="/post/uwpLogging/">logging</a> I didn&rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.</p>
+
+<h2 id="configuration:42d507d03b6380c8b6c5f61d637c346c">Configuration</h2>
+
+<p>The first step is to install <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>. Elasticsearch is an open source, distributed, RESTful search engine (that feels like a NoSQL database with powerful search and analytics capabilities). Its installation is pretty straightforward. The only thing I needed to do additionally was to install <a href="http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html">Server JRE</a> and to configure a JAVA_HOME system variable.</p>
+
+<p>Then you add <a href="https://serilog.net">Serilog</a> and a sink for Elasticsearch to your project. Serilog is a popular .NET logging library that supports structured logging. Getting them from NuGet:</p>
+
+<pre><code>Install-Package Serilog
+Install-Package Serilog.Sinks.ElasticSearch
+</code></pre>
+
+<p>Creating a logger instance:</p>
+
+<pre><code>var logger = new LoggerConfiguration()
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(
+                new Uri(&quot;http://localhost:9200&quot;))
+                {
+                    AutoRegisterTemplate = true
+                }).CreateLogger();
+</code></pre>
+
+<p>For production projects I&rsquo;d additionally create a wrapper around it and put it in some IoC container.</p>
+
+<h2 id="writing-a-log:42d507d03b6380c8b6c5f61d637c346c">Writing a log</h2>
+
+<p>After the configuration is finished writing a log entry to ElasticSearch boils down to just:</p>
+
+<pre><code>logger.Information(&quot;User {userId} made an order for {orderAmount}&quot;, userId, orderAmount);
+</code></pre>
+
+<p>Looks very similar to any other logging library, doesn&rsquo;t it? However unlike most other libraries <code>userId</code> and <code>orderAmount</code> are not going to be formatted to string directly, but captured as separate meaningful values. They become fields by which you can index, search and sort. That&rsquo;s the main benefit of structural logging.</p>
+
+<h2 id="log-analysis:42d507d03b6380c8b6c5f61d637c346c">Log analysis</h2>
+
+<p>Elasticsearch would be a lot less attractive without <a href="https://www.elastic.co/products/kibana">Kibana</a>. Kibana is a powerful visualization platform on top of Elasticsearch. It allows to visualize and analyze your data with different graphs, charts, maps etc.</p>
+
+<div class="standardBorder verticalMargins" markdown="1">
+    <img src="/images/kibanaDashboard.png">
+</div>
+
+<p>There are situations when you have several logs and you want to aggregate data from them for analysis. For example in my current project I have at least three logs: Audit log for requests and responses (it&rsquo;s a WebApi application), Sync log for requests to external SOAP services and a general application log. They are written to SQL databases. You have to write a <code>UNION</code> query on several tables with different schemas to get a general picture of what&rsquo;s going on in the application. To achieve the same in Kibana you just need to name your Elasticsearch indices with a pattern - some common prefix.</p>
+
+<p>Another helpful thing here is to use a <code>RequestId</code> through out your logs. You can generate a unique <code>RequestId</code> in some early stage of the request pipeline (HTTP module, Middleware, ActionFilter) and then include it in each log entry in different logs. This allows to see everything that have happened during a particular request - request body, corresponding response, exceptions and any other events.</p>
+
+<p>In conclusion you can have a great logging system with Serilog, Elasticsearch and Kibana. And all this goodness works in .NET Core also.
+Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)</p>
+
+    </div>
+    <div class="post-footer">
+      <a href="http://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 6 Articles →</a>
+
+    </div>
+    
+  </div>
+</div>
+      <div class="row footer">
+        <div class="col-sm-12 text-center">
+          &copy; 2017.
+Built with <a href="http://gohugo.io/">Hugo</a>.
+
+        </div>
+      </div>
+    </div>
+    <script src="http://tolikcode.github.io/javascripts/shiori.js"></script>
+    
+
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+  </body>
+</html>
+
