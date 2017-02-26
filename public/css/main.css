@@ -27,3 +27,8 @@
 	border-width: 1px;
 	border-radius: 6px
 }
+
+.verticalMargins {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

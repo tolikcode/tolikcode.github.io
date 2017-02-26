@@ -6,8 +6,136 @@
     <description>Recent content in Posts on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Apr 2016 17:49:51 +0300</lastBuildDate>
+    <lastBuildDate>Sun, 15 Jan 2017 20:07:41 +0200</lastBuildDate>
     <atom:link href="http://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Any logs and Elasticsearch</title>
+      <link>http://tolikcode.github.io/post/logstash/</link>
+      <pubDate>Sun, 15 Jan 2017 20:07:41 +0200</pubDate>
+      
+      <guid>http://tolikcode.github.io/post/logstash/</guid>
+      <description>
+
+&lt;p&gt;Last time we looked at how and why you might want to write your application logs to Elasticsearch. But Elasticsearch is a great tool for many logging, monitoring and analytics cases. This blog post is an introduction to how Elasticsearch can help you analyze almost any data source, for example, your web server logs.&lt;/p&gt;
+
+&lt;h2 id=&#34;logstash:5f55cedc7c54a8267431baeade267272&#34;&gt;Logstash&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/products/logstash&#34;&gt;Logstash&lt;/a&gt; is  a general purpose ETL (Extract-Transform-Load) tool, consisting of many inputs, filters and outputs. It&amp;rsquo;s a part of so-called Elastic Stack. Logstash helps you to put your data from different sources into Elasticsearch.&lt;/p&gt;
+
+&lt;p&gt;There&amp;rsquo;s a good chance you are running you application in IIS if you are a .NET developer. There are &lt;a href=&#34;https://blogs.msdn.microsoft.com/friis/2014/02/06/how-to-analyse-iis-logs-using-logparser-logparser-studio/&#34;&gt;many tools&lt;/a&gt; to analyze IIS logs, but I haven&amp;rsquo;t seen anything as powerful as Elasticsearch. Analyzing your IIS logs with Elastic Stack might be especially interesting for you if you already use it for your other logs.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;rsquo;t want to repeat the general guidelines from many &lt;a href=&#34;https://improveandrepeat.com/2014/11/using-logstash-to-analyse-iis-log-files-with-kibana/&#34;&gt;existing&lt;/a&gt; &lt;a href=&#34;https://blog.sstorie.com/importing-iis-logs-into-elasticsearch-with-logstash/&#34;&gt;articles&lt;/a&gt; on how to use Logstash. The most important part there is Logstash config file. The most important part in the config file is the filter step.  Here&amp;rsquo;s my filter config:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;## Ignore the comments that IIS will add to the start of the W3C logs
+if [message] =~ &amp;quot;^#&amp;quot; {
+  drop {}
+}
+
+grok {
+  match =&amp;gt; [&amp;quot;message&amp;quot;, &amp;quot;%{TIMESTAMP_ISO8601:log_timestamp} %{NOTSPACE:s-site} %{WORD:cs-method} %{URIPATH:cs-uri-stem} %{NOTSPACE:cs-uri-query} %{NUMBER:s-port} %{NOTSPACE:cs-username} %{IPORHOST:c-ip} %{NOTSPACE:cs(User-Agent)} %{NOTSPACE:cs(Referer)} %{NUMBER:sc-status:int} %{NUMBER:sc-substatus:int} %{NUMBER:sc-win32-status:int} %{NUMBER:time-taken:int}&amp;quot;]
+}
+
+#Set the Event Timesteamp from the log
+date {
+  match =&amp;gt; [ &amp;quot;log_timestamp&amp;quot;, &amp;quot;YYYY-MM-dd HH:mm:ss&amp;quot; ]
+  timezone =&amp;gt; &amp;quot;Etc/UTC&amp;quot;
+} 
+
+geoip {
+  source =&amp;gt; &amp;quot;c-ip&amp;quot;
+  target =&amp;gt; &amp;quot;geoip&amp;quot;
+  add_tag =&amp;gt; [ &amp;quot;iis-geoip&amp;quot; ]
+}
+ 
+ 
+useragent {
+  source=&amp;gt; &amp;quot;useragent&amp;quot;
+  prefix=&amp;gt; &amp;quot;browser&amp;quot;
+}
+ 
+mutate {
+ remove_field =&amp;gt; [ &amp;quot;log_timestamp&amp;quot;]
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It should match your IIS log fields configuration. Mine worked great for the default IIS log fields configuration on Windows Server 2012. Use &lt;a href=&#34;https://grokdebug.herokuapp.com/&#34;&gt;Grok Debugger&lt;/a&gt; to troubleshoot it.&lt;/p&gt;
+
+&lt;p&gt;A killer feature of Kibana for me was the ability to visualize the geography of requests to the server:&lt;/p&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;http://tolikcode.github.io/images/kibanaMap.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;notes:5f55cedc7c54a8267431baeade267272&#34;&gt;Notes:&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Elasticsearch and Logstash are quite resource-consuming. That&amp;rsquo;s why it&amp;rsquo;s better to install them on a separate server and to use &lt;a href=&#34;https://www.elastic.co/products/beats/filebeat&#34;&gt;Filebeat&lt;/a&gt; to ship logs from your web server machine(s).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Another interesting trick for real-time log analysis in high-load systems is to use ETW. In IIS Manager Logging section change Log Event Destination to ETW. This will create ETW events that can be captured by some windows service and written directly to ElasticSearch. This solution is a bit more complicated, but it allows to avoid writing logs to disk and their subsequent parsing.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;When I tried to visualize my IIS logs in Kibana I got the following error: &lt;code&gt;&amp;quot;Trying to query 1355 shards, which is over the limit of 1000. This limit exists because querying many shards at the same time can make the job of the coordinating node very CPU and/or memory intensive&amp;quot;&lt;/code&gt;. By default Logstash creates one Elasticsearch index for each day (IIS log file) and 5 shards per index. I resolved the issue by decreasing the number of shards per index. This is configured in &lt;a href=&#34;http://spuder.github.io/2015/elasticsearch-default-shards&#34;&gt;index template&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Serilog and Elasticsearch</title>
+      <link>http://tolikcode.github.io/post/elasticsearch/</link>
+      <pubDate>Tue, 29 Nov 2016 20:55:18 +0200</pubDate>
+      
+      <guid>http://tolikcode.github.io/post/elasticsearch/</guid>
+      <description>
+
+&lt;p&gt;In my previous article about &lt;a href=&#34;http://tolikcode.github.io/post/uwpLogging/&#34;&gt;logging&lt;/a&gt; I didn&amp;rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.&lt;/p&gt;
+
+&lt;h2 id=&#34;configuration:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;The first step is to install &lt;a href=&#34;https://www.elastic.co/products/elasticsearch&#34;&gt;Elasticsearch&lt;/a&gt;. Elasticsearch is an open source, distributed, RESTful search engine (that feels like a NoSQL database with powerful search and analytics capabilities). Its installation is pretty straightforward. The only thing I needed to do additionally was to install &lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html&#34;&gt;Server JRE&lt;/a&gt; and to configure a JAVA_HOME system variable.&lt;/p&gt;
+
+&lt;p&gt;Then you add &lt;a href=&#34;https://serilog.net&#34;&gt;Serilog&lt;/a&gt; and a sink for Elasticsearch to your project. Serilog is a popular .NET logging library that supports structured logging. Getting them from NuGet:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Install-Package Serilog
+Install-Package Serilog.Sinks.ElasticSearch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Creating a logger instance:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var logger = new LoggerConfiguration()
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(
+                new Uri(&amp;quot;http://localhost:9200&amp;quot;))
+                {
+                    AutoRegisterTemplate = true
+                }).CreateLogger();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For production projects I&amp;rsquo;d additionally create a wrapper around it and put it in some IoC container.&lt;/p&gt;
+
+&lt;h2 id=&#34;writing-a-log:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Writing a log&lt;/h2&gt;
+
+&lt;p&gt;After the configuration is finished writing a log entry to ElasticSearch boils down to just:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;logger.Information(&amp;quot;User {userId} made an order for {orderAmount}&amp;quot;, userId, orderAmount);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks very similar to any other logging library, doesn&amp;rsquo;t it? However unlike most other libraries &lt;code&gt;userId&lt;/code&gt; and &lt;code&gt;orderAmount&lt;/code&gt; are not going to be formatted to string directly, but captured as separate meaningful values. They become fields by which you can index, search and sort. That&amp;rsquo;s the main benefit of structural logging.&lt;/p&gt;
+
+&lt;h2 id=&#34;log-analysis:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Log analysis&lt;/h2&gt;
+
+&lt;p&gt;Elasticsearch would be a lot less attractive without &lt;a href=&#34;https://www.elastic.co/products/kibana&#34;&gt;Kibana&lt;/a&gt;. Kibana is a powerful visualization platform on top of Elasticsearch. It allows to visualize and analyze your data with different graphs, charts, maps etc.&lt;/p&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;http://tolikcode.github.io/images/kibanaDashboard.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There are situations when you have several logs and you want to aggregate data from them for analysis. For example in my current project I have at least three logs: Audit log for requests and responses (it&amp;rsquo;s a WebApi application), Sync log for requests to external SOAP services and a general application log. They are written to SQL databases. You have to write a &lt;code&gt;UNION&lt;/code&gt; query on several tables with different schemas to get a general picture of what&amp;rsquo;s going on in the application. To achieve the same in Kibana you just need to name your Elasticsearch indices with a pattern - some common prefix.&lt;/p&gt;
+
+&lt;p&gt;Another helpful thing here is to use a &lt;code&gt;RequestId&lt;/code&gt; through out your logs. You can generate a unique &lt;code&gt;RequestId&lt;/code&gt; in some early stage of the request pipeline (HTTP module, Middleware, ActionFilter) and then include it in each log entry in different logs. This allows to see everything that have happened during a particular request - request body, corresponding response, exceptions and any other events.&lt;/p&gt;
+
+&lt;p&gt;In conclusion you can have a great logging system with Serilog, Elasticsearch and Kibana. And all this goodness works in .NET Core also.
+Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Yet another money manager</title>
@@ -28,10 +156,9 @@ The core of this solution is ASP.NET MVC application and a Web API for synchroni
 
 &lt;p&gt;Web application screenshot is here just to get your attention (Disclaimer: I&amp;rsquo;m not a designer).&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;standardBorder&#34; markdown=&#34;1&#34;&gt;
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
     &lt;img src=&#34;http://tolikcode.github.io/images/moneyManScreen.PNG&#34;&gt;
 &lt;/div&gt;
-&lt;p/&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;how-can-it-interest-you:7cced0d4ebc37f80338282bff66da165&#34;&gt;How can it interest you?&lt;/h2&gt;
 
@@ -129,7 +256,7 @@ There are third party applications that might help you with it. But people like 
 
 &lt;h2 id=&#34;metrolog:2856d4dc02b2154b98472d85debbb153&#34;&gt;MetroLog&lt;/h2&gt;
 
-&lt;p&gt;There are many different third party libraries for logging in Universal applications. The most popular one is &lt;a href=&#34;https://www.nuget.org/packages/MetroLog/&#34;&gt;MetroLog&lt;/a&gt;. Log4net is a default logging solution in desktop applications for me. MetroLog is a log4net for Windows Universal applications.&lt;/p&gt;
+&lt;p&gt;There are many different third party libraries for logging in Universal Windows applications. The most popular one is &lt;a href=&#34;https://www.nuget.org/packages/MetroLog/&#34;&gt;MetroLog&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;span class=&#34;largeGreen&#34;&gt;+ &lt;/span&gt; Easy to configure.&lt;/p&gt;
 
@@ -235,10 +362,9 @@ git commit -m &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push orig
 
 &lt;p&gt;If you have done everything correctly your Git commit history should look something like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;center&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;http://tolikcode.github.io/images/HugoOnGithubHistory.png&#34; alt=&#34;Git commit history&#34;&gt;
+&lt;div class=&#34;center verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;http://tolikcode.github.io/images/HugoOnGithubHistory.png&#34;&gt;
 &lt;/div&gt;
-&lt;p/&gt;&lt;/p&gt;
 
 &lt;p&gt;When your changes are ready to see the world just publish them with &lt;code&gt;subtree push&lt;/code&gt; command to the &lt;code&gt;master&lt;/code&gt;.&lt;/p&gt;
 
