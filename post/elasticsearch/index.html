@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://tolikcode.github.io/stylesheets/shiori.css">
+    <link rel="stylesheet" href="https://tolikcode.github.io/stylesheets/shiori.css">
     <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="http://tolikcode.github.io/favicon.ico">
+    <link rel="shortcut icon" href="https://tolikcode.github.io/favicon.ico">
     <title>Serilog and Elasticsearch | Tolik Code</title>
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
@@ -28,12 +28,12 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-          <a href="http://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
+          <a href="https://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
         </div>
         <div class="collapse navbar-collapse js-navbar-collapse">
           <ul class="navbar-nav nav">
-            <li><a href="http://tolikcode.github.io/post">Archive</a></li>
-<li><a href="http://tolikcode.github.io/about">About</a></li>
+            <li><a href="https://tolikcode.github.io/post">Archive</a></li>
+<li><a href="https://tolikcode.github.io/about">About</a></li>
 
           </ul>
           <ul class="navbar-nav nav navbar-right">
@@ -58,11 +58,11 @@
 
     </div>
     <div class="post-content">
-      
+      <p>In my previous article about <a href="/post/uwpLogging/">logging</a> I didn&rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.</p>
 
-<p>In my previous article about <a href="/post/uwpLogging/">logging</a> I didn&rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.</p>
+<p></p>
 
-<h2 id="configuration:42d507d03b6380c8b6c5f61d637c346c">Configuration</h2>
+<h2 id="configuration">Configuration</h2>
 
 <p>The first step is to install <a href="https://www.elastic.co/products/elasticsearch">Elasticsearch</a>. Elasticsearch is an open source, distributed, RESTful search engine (that feels like a NoSQL database with powerful search and analytics capabilities). Its installation is pretty straightforward. The only thing I needed to do additionally was to install <a href="http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html">Server JRE</a> and to configure a JAVA_HOME system variable.</p>
 
@@ -84,7 +84,7 @@ Install-Package Serilog.Sinks.ElasticSearch
 
 <p>For production projects I&rsquo;d additionally create a wrapper around it and put it in some IoC container.</p>
 
-<h2 id="writing-a-log:42d507d03b6380c8b6c5f61d637c346c">Writing a log</h2>
+<h2 id="writing-a-log">Writing a log</h2>
 
 <p>After the configuration is finished writing a log entry to ElasticSearch boils down to just:</p>
 
@@ -93,7 +93,7 @@ Install-Package Serilog.Sinks.ElasticSearch
 
 <p>Looks very similar to any other logging library, doesn&rsquo;t it? However unlike most other libraries <code>userId</code> and <code>orderAmount</code> are not going to be formatted to string directly, but captured as separate meaningful values. They become fields by which you can index, search and sort. That&rsquo;s the main benefit of structural logging.</p>
 
-<h2 id="log-analysis:42d507d03b6380c8b6c5f61d637c346c">Log analysis</h2>
+<h2 id="log-analysis">Log analysis</h2>
 
 <p>Elasticsearch would be a lot less attractive without <a href="https://www.elastic.co/products/kibana">Kibana</a>. Kibana is a powerful visualization platform on top of Elasticsearch. It allows to visualize and analyze your data with different graphs, charts, maps etc.</p>
 
@@ -107,10 +107,9 @@ Install-Package Serilog.Sinks.ElasticSearch
 
 <p>In conclusion you can have a great logging system with Serilog, Elasticsearch and Kibana. And all this goodness works in .NET Core also.
 Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)</p>
-
     </div>
     <div class="post-footer">
-      <a href="http://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 6 Articles →</a>
+      <a href="https://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 6 Articles →</a>
 
     </div>
     
@@ -124,7 +123,7 @@ Built with <a href="http://gohugo.io/">Hugo</a>.
         </div>
       </div>
     </div>
-    <script src="http://tolikcode.github.io/javascripts/shiori.js"></script>
+    <script src="https://tolikcode.github.io/javascripts/shiori.js"></script>
     
 
 

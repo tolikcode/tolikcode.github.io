@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Tolik Code</title>
-    <link>http://tolikcode.github.io/post/</link>
+    <link>https://tolikcode.github.io/post/index.xml</link>
     <description>Recent content in Posts on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 15 Jan 2017 20:07:41 +0200</lastBuildDate>
-    <atom:link href="http://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Any logs and Elasticsearch</title>
-      <link>http://tolikcode.github.io/post/logstash/</link>
+      <link>https://tolikcode.github.io/post/logstash/</link>
       <pubDate>Sun, 15 Jan 2017 20:07:41 +0200</pubDate>
       
-      <guid>http://tolikcode.github.io/post/logstash/</guid>
+      <guid>https://tolikcode.github.io/post/logstash/</guid>
       <description>
 
 &lt;p&gt;Last time we looked at how and why you might want to write your application logs to Elasticsearch. But Elasticsearch is a great tool for many logging, monitoring and analytics cases. This blog post is an introduction to how Elasticsearch can help you analyze almost any data source, for example, your web server logs.&lt;/p&gt;
 
-&lt;h2 id=&#34;logstash:5f55cedc7c54a8267431baeade267272&#34;&gt;Logstash&lt;/h2&gt;
+&lt;h2 id=&#34;logstash&#34;&gt;Logstash&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.elastic.co/products/logstash&#34;&gt;Logstash&lt;/a&gt; is  a general purpose ETL (Extract-Transform-Load) tool, consisting of many inputs, filters and outputs. It&amp;rsquo;s a part of so-called Elastic Stack. Logstash helps you to put your data from different sources into Elasticsearch.&lt;/p&gt;
 
@@ -64,10 +64,10 @@ mutate {
 &lt;p&gt;A killer feature of Kibana for me was the ability to visualize the geography of requests to the server:&lt;/p&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;http://tolikcode.github.io/images/kibanaMap.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/kibanaMap.png&#34;&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;notes:5f55cedc7c54a8267431baeade267272&#34;&gt;Notes:&lt;/h2&gt;
+&lt;h2 id=&#34;notes&#34;&gt;Notes:&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Elasticsearch and Logstash are quite resource-consuming. That&amp;rsquo;s why it&amp;rsquo;s better to install them on a separate server and to use &lt;a href=&#34;https://www.elastic.co/products/beats/filebeat&#34;&gt;Filebeat&lt;/a&gt; to ship logs from your web server machine(s).&lt;/p&gt;&lt;/li&gt;
@@ -81,15 +81,15 @@ mutate {
     
     <item>
       <title>Serilog and Elasticsearch</title>
-      <link>http://tolikcode.github.io/post/elasticsearch/</link>
+      <link>https://tolikcode.github.io/post/elasticsearch/</link>
       <pubDate>Tue, 29 Nov 2016 20:55:18 +0200</pubDate>
       
-      <guid>http://tolikcode.github.io/post/elasticsearch/</guid>
-      <description>
+      <guid>https://tolikcode.github.io/post/elasticsearch/</guid>
+      <description>&lt;p&gt;In my previous article about &lt;a href=&#34;https://tolikcode.github.io/post/uwpLogging/&#34;&gt;logging&lt;/a&gt; I didn&amp;rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.&lt;/p&gt;
 
-&lt;p&gt;In my previous article about &lt;a href=&#34;http://tolikcode.github.io/post/uwpLogging/&#34;&gt;logging&lt;/a&gt; I didn&amp;rsquo;t really dig the semantic/structured logging. ETW was a bit complicated for my needs and the benefits of structural logging are not obvious with logging sinks like text file or SQL database. I gave it a shot with Serilog and Elasticsearch, and liked it a lot more.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;configuration:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Configuration&lt;/h2&gt;
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
 
 &lt;p&gt;The first step is to install &lt;a href=&#34;https://www.elastic.co/products/elasticsearch&#34;&gt;Elasticsearch&lt;/a&gt;. Elasticsearch is an open source, distributed, RESTful search engine (that feels like a NoSQL database with powerful search and analytics capabilities). Its installation is pretty straightforward. The only thing I needed to do additionally was to install &lt;a href=&#34;http://www.oracle.com/technetwork/java/javase/downloads/server-jre8-downloads-2133154.html&#34;&gt;Server JRE&lt;/a&gt; and to configure a JAVA_HOME system variable.&lt;/p&gt;
 
@@ -111,7 +111,7 @@ Install-Package Serilog.Sinks.ElasticSearch
 
 &lt;p&gt;For production projects I&amp;rsquo;d additionally create a wrapper around it and put it in some IoC container.&lt;/p&gt;
 
-&lt;h2 id=&#34;writing-a-log:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Writing a log&lt;/h2&gt;
+&lt;h2 id=&#34;writing-a-log&#34;&gt;Writing a log&lt;/h2&gt;
 
 &lt;p&gt;After the configuration is finished writing a log entry to ElasticSearch boils down to just:&lt;/p&gt;
 
@@ -120,12 +120,12 @@ Install-Package Serilog.Sinks.ElasticSearch
 
 &lt;p&gt;Looks very similar to any other logging library, doesn&amp;rsquo;t it? However unlike most other libraries &lt;code&gt;userId&lt;/code&gt; and &lt;code&gt;orderAmount&lt;/code&gt; are not going to be formatted to string directly, but captured as separate meaningful values. They become fields by which you can index, search and sort. That&amp;rsquo;s the main benefit of structural logging.&lt;/p&gt;
 
-&lt;h2 id=&#34;log-analysis:42d507d03b6380c8b6c5f61d637c346c&#34;&gt;Log analysis&lt;/h2&gt;
+&lt;h2 id=&#34;log-analysis&#34;&gt;Log analysis&lt;/h2&gt;
 
 &lt;p&gt;Elasticsearch would be a lot less attractive without &lt;a href=&#34;https://www.elastic.co/products/kibana&#34;&gt;Kibana&lt;/a&gt;. Kibana is a powerful visualization platform on top of Elasticsearch. It allows to visualize and analyze your data with different graphs, charts, maps etc.&lt;/p&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;http://tolikcode.github.io/images/kibanaDashboard.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/kibanaDashboard.png&#34;&gt;
 &lt;/div&gt;
 
 &lt;p&gt;There are situations when you have several logs and you want to aggregate data from them for analysis. For example in my current project I have at least three logs: Audit log for requests and responses (it&amp;rsquo;s a WebApi application), Sync log for requests to external SOAP services and a general application log. They are written to SQL databases. You have to write a &lt;code&gt;UNION&lt;/code&gt; query on several tables with different schemas to get a general picture of what&amp;rsquo;s going on in the application. To achieve the same in Kibana you just need to name your Elasticsearch indices with a pattern - some common prefix.&lt;/p&gt;
@@ -133,23 +133,22 @@ Install-Package Serilog.Sinks.ElasticSearch
 &lt;p&gt;Another helpful thing here is to use a &lt;code&gt;RequestId&lt;/code&gt; through out your logs. You can generate a unique &lt;code&gt;RequestId&lt;/code&gt; in some early stage of the request pipeline (HTTP module, Middleware, ActionFilter) and then include it in each log entry in different logs. This allows to see everything that have happened during a particular request - request body, corresponding response, exceptions and any other events.&lt;/p&gt;
 
 &lt;p&gt;In conclusion you can have a great logging system with Serilog, Elasticsearch and Kibana. And all this goodness works in .NET Core also.
-Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)&lt;/p&gt;
-</description>
+Too bad getting this to production servers through my management and client sysadmins is more difficult than actually developing this solution :)&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Yet another money manager</title>
-      <link>http://tolikcode.github.io/post/moneyman/</link>
+      <link>https://tolikcode.github.io/post/moneyman/</link>
       <pubDate>Tue, 05 Apr 2016 17:49:51 +0300</pubDate>
       
-      <guid>http://tolikcode.github.io/post/moneyman/</guid>
-      <description>
+      <guid>https://tolikcode.github.io/post/moneyman/</guid>
+      <description>&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. That&amp;rsquo;s why I needed to go through a bunch of MVA courses and to read Jon Galloway&amp;rsquo;s &amp;ldquo;Professional ASP.NET MVC 5&amp;rdquo; book to update my skills. Just to test myself I wanted to develop a small project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
 
-&lt;p&gt;I got a little bored and decided to do some web development. I did several ASP.NET Web Forms projects back in university days and this is as far as my web development experience goes. That&amp;rsquo;s why I needed to go through a bunch of MVA courses and to read Jon Galloway&amp;rsquo;s &amp;ldquo;Professional ASP.NET MVC 5&amp;rdquo; book to update my skills. Just to test myself I wanted to develop a small project that would be at least of some use for me and give me enough drive to finish it.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 &lt;p&gt;I&amp;rsquo;m trying to control how much money I spend and I need a solution to help me with this. There are plenty of expense managers already, but all of them never quite meet everyone&amp;rsquo;s exact dreams and wants as everyone handles it a little differently. They are also either not free, or with ads, or provide no cloud synchronization.&lt;/p&gt;
 
-&lt;h2 id=&#34;project-description:7cced0d4ebc37f80338282bff66da165&#34;&gt;Project description&lt;/h2&gt;
+&lt;h2 id=&#34;project-description&#34;&gt;Project description&lt;/h2&gt;
 
 &lt;p&gt;The goal of this project is to help you track your expenses and incomes. I want to keep it as simple as possible. I&amp;rsquo;d like to have a handy way to note my expenses anywhere I go with my phone and to have it all aggregated in a convenient form on my PC later.
 The core of this solution is ASP.NET MVC application and a Web API for synchronization with an Android client. Android app is still in development.&lt;/p&gt;
@@ -157,10 +156,10 @@ The core of this solution is ASP.NET MVC application and a Web API for synchroni
 &lt;p&gt;Web application screenshot is here just to get your attention (Disclaimer: I&amp;rsquo;m not a designer).&lt;/p&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;http://tolikcode.github.io/images/moneyManScreen.PNG&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/moneyManScreen.PNG&#34;&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;how-can-it-interest-you:7cced0d4ebc37f80338282bff66da165&#34;&gt;How can it interest you?&lt;/h2&gt;
+&lt;h2 id=&#34;how-can-it-interest-you&#34;&gt;How can it interest you?&lt;/h2&gt;
 
 &lt;p&gt;There are many similar projects. But none of them combine both of the following features:&lt;/p&gt;
 
@@ -176,30 +175,29 @@ The core of this solution is ASP.NET MVC application and a Web API for synchroni
 &lt;li&gt;&lt;a href=&#34;https://web.andromoney.com&#34;&gt;AndroMoney&lt;/a&gt; - easy to use expense manager for Android, iOS and web.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;money-man-links:7cced0d4ebc37f80338282bff66da165&#34;&gt;Money Man links:&lt;/h2&gt;
+&lt;h2 id=&#34;money-man-links&#34;&gt;Money Man links:&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://github.com/tolikcode/MoneyMan&#34;&gt;Sources on GitHub&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&#34;http://moneyman.azurewebsites.net/&#34;&gt;Running application in Azure&lt;/a&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;&lt;a href=&#34;http://moneyman.azurewebsites.net/&#34;&gt;Running application in Azure&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Taking the trash out with PowerShell</title>
-      <link>http://tolikcode.github.io/post/recycleBinPowerShell/</link>
+      <link>https://tolikcode.github.io/post/recycleBinPowerShell/</link>
       <pubDate>Sun, 15 Nov 2015 11:12:12 +0200</pubDate>
       
-      <guid>http://tolikcode.github.io/post/recycleBinPowerShell/</guid>
-      <description>
+      <guid>https://tolikcode.github.io/post/recycleBinPowerShell/</guid>
+      <description>&lt;p&gt;Many Windows users tend to store all of their old unnecessary files in the Recycle Bin. However, it just irritates me to know that files I almost definitely won&amp;rsquo;t ever need are still taking space up on my hard drive. Immediately deleting these files bypassing the Recycle Bin is also not an option here.&lt;/p&gt;
 
-&lt;p&gt;Many Windows users tend to store all of their old unnecessary files in the Recycle Bin. However, it just irritates me to know that files I almost definitely won&amp;rsquo;t ever need are still taking space up on my hard drive. Immediately deleting these files bypassing the Recycle Bin is also not an option here.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;goal:9f7a0d51badf47810d72f2123425000b&#34;&gt;Goal&lt;/h2&gt;
+&lt;h2 id=&#34;goal&#34;&gt;Goal&lt;/h2&gt;
 
 &lt;p&gt;Recycle Bin should be something like a safety net in case of mistakenly deleted files and pretend it doesn&amp;rsquo;t even exist otherwise. Windows automatically empties your Recycle Bin when it reaches certain size limit. In my opinion there should be a time limit additionally to the size limit in the Recycle Bin.
 There are third party applications that might help you with it. But people like me who are irritated by three month old files in their Recycle Bins are probably not going to be very happy with an application cluttering their computers just for this simple task. Fortunately you can do it with PowerShell.&lt;/p&gt;
 
-&lt;h2 id=&#34;solution:9f7a0d51badf47810d72f2123425000b&#34;&gt;Solution&lt;/h2&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
 
 &lt;p&gt;After some googling I&amp;rsquo;ve found a detailed answer from &lt;code&gt;Indrek&lt;/code&gt; on &lt;a href=&#34;http://superuser.com/a/434673&#34;&gt;SuperUser&lt;/a&gt;. I liked the answer so much I decided to copy it here. It&amp;rsquo;s also a nice opportunity to learn a bit of PowerShell.&lt;/p&gt;
 
@@ -226,23 +224,22 @@ There are third party applications that might help you with it. But people like 
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;I&amp;rsquo;ve been using this solution for several months already and it works like a charm.&lt;/p&gt;
-</description>
+&lt;p&gt;I&amp;rsquo;ve been using this solution for several months already and it works like a charm.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Logging in Universal Windows applications</title>
-      <link>http://tolikcode.github.io/post/uwpLogging/</link>
+      <link>https://tolikcode.github.io/post/uwpLogging/</link>
       <pubDate>Sat, 24 Oct 2015 23:23:55 +0300</pubDate>
       
-      <guid>http://tolikcode.github.io/post/uwpLogging/</guid>
+      <guid>https://tolikcode.github.io/post/uwpLogging/</guid>
       <description>
 
 &lt;p&gt;As a Windows Phone developer I always envied Android developers with their quite handy out of the box logging solution, namely LogCat. It allows both to output debug information in real time and to write it somewhere permanently.&lt;/p&gt;
 
 &lt;p&gt;With Windows 10 being released I was hoping to have something similar to Android LogCat in Windows. Alas, there are a few changes to ETW Tracing and that&amp;rsquo;s all. If your have a Windows Phone / Window 8 development experience there is going to be nothing new for you.&lt;/p&gt;
 
-&lt;h2 id=&#34;etw-tracing:2856d4dc02b2154b98472d85debbb153&#34;&gt;ETW Tracing&lt;/h2&gt;
+&lt;h2 id=&#34;etw-tracing&#34;&gt;ETW Tracing&lt;/h2&gt;
 
 &lt;p&gt;The Microsoft way for logging in UWP applications is via &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/windows/desktop/aa363668&#34;&gt;Event Tracing for Windows&lt;/a&gt;. You can find a corresponding sample from Microsoft on &lt;a href=&#34;https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/Logging&#34;&gt;GitHub&lt;/a&gt;. This technology has been around both in desktop and mobile versions of Windows for quite some time already.&lt;/p&gt;
 
@@ -254,7 +251,7 @@ There are third party applications that might help you with it. But people like 
 
 &lt;p&gt;&lt;span class=&#34;largeRed&#34;&gt;- &lt;/span&gt; By default the result is going to be &lt;code&gt;*.etl&lt;/code&gt; files that have to be decoded.&lt;/p&gt;
 
-&lt;h2 id=&#34;metrolog:2856d4dc02b2154b98472d85debbb153&#34;&gt;MetroLog&lt;/h2&gt;
+&lt;h2 id=&#34;metrolog&#34;&gt;MetroLog&lt;/h2&gt;
 
 &lt;p&gt;There are many different third party libraries for logging in Universal Windows applications. The most popular one is &lt;a href=&#34;https://www.nuget.org/packages/MetroLog/&#34;&gt;MetroLog&lt;/a&gt;.&lt;/p&gt;
 
@@ -264,12 +261,12 @@ There are third party applications that might help you with it. But people like 
 
 &lt;p&gt;&lt;span class=&#34;largeRed&#34;&gt;- &lt;/span&gt; Additional reference in your application.&lt;/p&gt;
 
-&lt;h2 id=&#34;retrieving-logs-from-a-windows-phone:2856d4dc02b2154b98472d85debbb153&#34;&gt;Retrieving logs from a Windows phone&lt;/h2&gt;
+&lt;h2 id=&#34;retrieving-logs-from-a-windows-phone&#34;&gt;Retrieving logs from a Windows phone&lt;/h2&gt;
 
 &lt;p&gt;Whether you&amp;rsquo;re doing ETW tracing or using a third party library (or your own custom solution) you are going to need to retrieve your logs from a device. You can upload them to some server or just prompt users to email them directly to you. In case you have a physical access to a test device
 the easiest and most convenient way is to use &lt;a href=&#34;https://wptools.codeplex.com&#34;&gt;Windows Phone Power Tools&lt;/a&gt;. I&amp;rsquo;ve tested it with Windows 10 Mobile Insider Preview and it works great.&lt;/p&gt;
 
-&lt;h2 id=&#34;application-insights:2856d4dc02b2154b98472d85debbb153&#34;&gt;Application Insights&lt;/h2&gt;
+&lt;h2 id=&#34;application-insights&#34;&gt;Application Insights&lt;/h2&gt;
 
 &lt;p&gt;In Visual Studio 2015 Microsoft has added &lt;a href=&#34;https://azure.microsoft.com/en-us/services/application-insights/&#34;&gt;Application Insights&lt;/a&gt; into Universal App project template. Application Insights is a comprehensive application monitoring solution available in Azure cloud. It allows to monitor the availability, performance, and usage metrics of different applications and services, and it might help you to solve the problems you wanted to solve with logging.&lt;/p&gt;
 </description>
@@ -277,15 +274,15 @@ the easiest and most convenient way is to use &lt;a href=&#34;https://wptools.co
     
     <item>
       <title>Hosting a Hugo generated site on GitHub</title>
-      <link>http://tolikcode.github.io/post/hugoOnGitHub/</link>
+      <link>https://tolikcode.github.io/post/hugoOnGitHub/</link>
       <pubDate>Sun, 04 Oct 2015 21:01:22 +0300</pubDate>
       
-      <guid>http://tolikcode.github.io/post/hugoOnGitHub/</guid>
+      <guid>https://tolikcode.github.io/post/hugoOnGitHub/</guid>
       <description>
 
 &lt;p&gt;The reason I like Hugo so much is partly because of its great &lt;a href=&#34;http://gohugo.io/overview/introduction/&#34;&gt;documentation&lt;/a&gt;. Yet I do believe that  &lt;a href=&#34;http://gohugo.io/tutorials/github-pages-blog/&#34;&gt;Hosting on GitHub&lt;/a&gt; tutorial can be improved a little. It contains some redundant information on how to create a blog with Hugo and focuses on GitHub &lt;em&gt;Project&lt;/em&gt; Pages for the most part. It does provide you with steps on how to host a personal blog on GitHub &lt;em&gt;User&lt;/em&gt; Pages, but this solution requires separate repositories for your blog&amp;rsquo;s source and generated static result. And with &lt;code&gt;git subtree&lt;/code&gt; you can do it in one GitHub repo. It took me some time to configure everything especially that I knew little about &lt;code&gt;git subtree&lt;/code&gt;. So I&amp;rsquo;ve decided to write my own article on GitHub publishing.&lt;/p&gt;
 
-&lt;h2 id=&#34;prerequisites:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Prerequisites&lt;/h2&gt;
+&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites&lt;/h2&gt;
 
 &lt;p&gt;I assume that you are familiar with Git and have already generated a &lt;a href=&#34;https://gohugo.io/overview/quickstart/&#34;&gt;Hugo website&lt;/a&gt;.
 You are going to have something like this in your website&amp;rsquo;s directory:&lt;/p&gt;
@@ -303,7 +300,7 @@ README.md
 
 &lt;p&gt;&lt;code&gt;public&lt;/code&gt; folder contains your generated static website. I&amp;rsquo;ve also added &lt;code&gt;README.md&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;goal:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Goal&lt;/h2&gt;
+&lt;h2 id=&#34;goal&#34;&gt;Goal&lt;/h2&gt;
 
 &lt;p&gt;So you want to host your Hugo generated website on GitHub Pages. It&amp;rsquo;s natural to put your site&amp;rsquo;s sources in a GitHub repo too.
 With &lt;a href=&#34;https://jekyllrb.com/&#34;&gt;Jekyll&lt;/a&gt; you can just put everything in your &lt;code&gt;master&lt;/code&gt; branch and GitHub would handle everything else for you.
@@ -311,7 +308,7 @@ In the case of Hugo we need to do some additional work as GitHub requires your s
 
 &lt;p&gt;The idea is to have the contents of &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;master&lt;/code&gt; branch, whereas other source files on some other orphan branch (e.g. &lt;code&gt;source&lt;/code&gt;). The &lt;code&gt;public&lt;/code&gt; folder on your &lt;code&gt;source&lt;/code&gt; branch is going to mirror the &lt;code&gt;master&lt;/code&gt; branch. This can be achieved with &lt;code&gt;git subtree&lt;/code&gt;. I encourage you to read more about &lt;code&gt;git subtree&lt;/code&gt;, however if you don&amp;rsquo;t feel like reading much today or just want to get results faster, here&amp;rsquo;s a tutorial for you.&lt;/p&gt;
 
-&lt;h2 id=&#34;solution:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Solution&lt;/h2&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
 
 &lt;p&gt;I usually use &lt;a href=&#34;https://www.sourcetreeapp.com/&#34;&gt;SourceTree&lt;/a&gt; for most of my Git related work. Unfortunately SourceTree doesn&amp;rsquo;t work very well with &lt;a href=&#34;https://jira.atlassian.com/browse/SRCTREEWIN-1643&#34;&gt;Git&lt;/a&gt; &lt;a href=&#34;https://jira.atlassian.com/browse/SRCTREEWIN-1819&#34;&gt;subtrees&lt;/a&gt;. Don&amp;rsquo;t worry anyway. There are just a few commands you need to type in your terminal.&lt;/p&gt;
 
@@ -351,7 +348,7 @@ git push origin source
 &lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;git subtree add --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master --squash
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id=&#34;workflow:adf90425c55aea6c37dbfd72255f1e59&#34;&gt;Workflow&lt;/h2&gt;
+&lt;h2 id=&#34;workflow&#34;&gt;Workflow&lt;/h2&gt;
 
 &lt;p&gt;That&amp;rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the &lt;code&gt;source&lt;/code&gt; branch:&lt;/p&gt;
 
@@ -363,7 +360,7 @@ git commit -m &amp;quot;Updating site&amp;quot; &amp;amp;&amp;amp; git push orig
 &lt;p&gt;If you have done everything correctly your Git commit history should look something like this:&lt;/p&gt;
 
 &lt;div class=&#34;center verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;http://tolikcode.github.io/images/HugoOnGithubHistory.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/HugoOnGithubHistory.png&#34;&gt;
 &lt;/div&gt;
 
 &lt;p&gt;When your changes are ready to see the world just publish them with &lt;code&gt;subtree push&lt;/code&gt; command to the &lt;code&gt;master&lt;/code&gt;.&lt;/p&gt;

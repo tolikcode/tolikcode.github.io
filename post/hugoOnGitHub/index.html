@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://tolikcode.github.io/stylesheets/shiori.css">
+    <link rel="stylesheet" href="https://tolikcode.github.io/stylesheets/shiori.css">
     <link href='//fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="http://tolikcode.github.io/favicon.ico">
+    <link rel="shortcut icon" href="https://tolikcode.github.io/favicon.ico">
     <title>Hosting a Hugo generated site on GitHub | Tolik Code</title>
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
@@ -28,12 +28,12 @@
               <span class="icon-bar"></span>
             </button>
           </div>
-          <a href="http://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
+          <a href="https://tolikcode.github.io" class="navbar-brand">Tolik Code</a>
         </div>
         <div class="collapse navbar-collapse js-navbar-collapse">
           <ul class="navbar-nav nav">
-            <li><a href="http://tolikcode.github.io/post">Archive</a></li>
-<li><a href="http://tolikcode.github.io/about">About</a></li>
+            <li><a href="https://tolikcode.github.io/post">Archive</a></li>
+<li><a href="https://tolikcode.github.io/about">About</a></li>
 
           </ul>
           <ul class="navbar-nav nav navbar-right">
@@ -62,7 +62,7 @@
 
 <p>The reason I like Hugo so much is partly because of its great <a href="http://gohugo.io/overview/introduction/">documentation</a>. Yet I do believe that  <a href="http://gohugo.io/tutorials/github-pages-blog/">Hosting on GitHub</a> tutorial can be improved a little. It contains some redundant information on how to create a blog with Hugo and focuses on GitHub <em>Project</em> Pages for the most part. It does provide you with steps on how to host a personal blog on GitHub <em>User</em> Pages, but this solution requires separate repositories for your blog&rsquo;s source and generated static result. And with <code>git subtree</code> you can do it in one GitHub repo. It took me some time to configure everything especially that I knew little about <code>git subtree</code>. So I&rsquo;ve decided to write my own article on GitHub publishing.</p>
 
-<h2 id="prerequisites:adf90425c55aea6c37dbfd72255f1e59">Prerequisites</h2>
+<h2 id="prerequisites">Prerequisites</h2>
 
 <p>I assume that you are familiar with Git and have already generated a <a href="https://gohugo.io/overview/quickstart/">Hugo website</a>.
 You are going to have something like this in your website&rsquo;s directory:</p>
@@ -80,7 +80,7 @@ README.md
 
 <p><code>public</code> folder contains your generated static website. I&rsquo;ve also added <code>README.md</code>.</p>
 
-<h2 id="goal:adf90425c55aea6c37dbfd72255f1e59">Goal</h2>
+<h2 id="goal">Goal</h2>
 
 <p>So you want to host your Hugo generated website on GitHub Pages. It&rsquo;s natural to put your site&rsquo;s sources in a GitHub repo too.
 With <a href="https://jekyllrb.com/">Jekyll</a> you can just put everything in your <code>master</code> branch and GitHub would handle everything else for you.
@@ -88,7 +88,7 @@ In the case of Hugo we need to do some additional work as GitHub requires your s
 
 <p>The idea is to have the contents of <code>public</code> folder on your <code>master</code> branch, whereas other source files on some other orphan branch (e.g. <code>source</code>). The <code>public</code> folder on your <code>source</code> branch is going to mirror the <code>master</code> branch. This can be achieved with <code>git subtree</code>. I encourage you to read more about <code>git subtree</code>, however if you don&rsquo;t feel like reading much today or just want to get results faster, here&rsquo;s a tutorial for you.</p>
 
-<h2 id="solution:adf90425c55aea6c37dbfd72255f1e59">Solution</h2>
+<h2 id="solution">Solution</h2>
 
 <p>I usually use <a href="https://www.sourcetreeapp.com/">SourceTree</a> for most of my Git related work. Unfortunately SourceTree doesn&rsquo;t work very well with <a href="https://jira.atlassian.com/browse/SRCTREEWIN-1643">Git</a> <a href="https://jira.atlassian.com/browse/SRCTREEWIN-1819">subtrees</a>. Don&rsquo;t worry anyway. There are just a few commands you need to type in your terminal.</p>
 
@@ -128,7 +128,7 @@ git push origin source
 <pre><code class="language-bash">git subtree add --prefix=public https://github.com/tolikcode/tolikcode.github.io.git master --squash
 </code></pre>
 
-<h2 id="workflow:adf90425c55aea6c37dbfd72255f1e59">Workflow</h2>
+<h2 id="workflow">Workflow</h2>
 
 <p>That&rsquo;s it! Your website is hosted on GitHub. Now your blogging workflow should be fairly simple. You just add new blogposts, edit templates, themes etc. Then you regenerate your website and commit everything to the <code>source</code> branch:</p>
 
@@ -152,7 +152,7 @@ git commit -m &quot;Updating site&quot; &amp;&amp; git push origin source
 
     </div>
     <div class="post-footer">
-      <a href="http://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 6 Articles →</a>
+      <a href="https://tolikcode.github.io/post" class="btn btn-primary btn-block btn-lg">View All 6 Articles →</a>
 
     </div>
     
@@ -166,7 +166,7 @@ Built with <a href="http://gohugo.io/">Hugo</a>.
         </div>
       </div>
     </div>
-    <script src="http://tolikcode.github.io/javascripts/shiori.js"></script>
+    <script src="https://tolikcode.github.io/javascripts/shiori.js"></script>
     
 
 
