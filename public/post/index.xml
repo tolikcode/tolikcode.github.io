@@ -6,8 +6,75 @@
     <description>Recent content in Posts on Tolik Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 15 Jan 2017 20:07:41 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 28 Jun 2017 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://tolikcode.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>mergeMap vs concatMap vs switchMap</title>
+      <link>https://tolikcode.github.io/post/rxjsMap/</link>
+      <pubDate>Wed, 28 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tolikcode.github.io/post/rxjsMap/</guid>
+      <description>&lt;p&gt;Today we&amp;rsquo;re going to look at the difference between these three &lt;a href=&#34;http://reactivex.io/rxjs/&#34;&gt;RxJS&lt;/a&gt; operators. This might be an obvious thing for someone doing reactive programming in their daily job. But for me, it took a few hours to play with these operators to thoroughly understand them. So I&amp;rsquo;ve decided to spend a few more hours in writing a blog post about it :)&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;tl-dr&#34;&gt;TL;DR&lt;/h2&gt;
+
+&lt;p&gt;Here&amp;rsquo;s an &lt;a href=&#34;https://jsfiddle.net/tolikcode/2uqrghy0/&#34;&gt;example at JsFiddle&lt;/a&gt; showing the difference between the operators.&lt;/p&gt;
+
+&lt;h2 id=&#34;when-do-you-need-them&#34;&gt;When do you need them?&lt;/h2&gt;
+
+&lt;p&gt;All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. In my examples, initial Observable is called &lt;strong&gt;outer&lt;/strong&gt; Observable. And items of the outer Observable are called &lt;strong&gt;inner&lt;/strong&gt; Observables. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is &lt;strong&gt;not&lt;/strong&gt; a recommended approach):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;outerObservable.subscribe(outerItem =&amp;gt; {
+    outerItem.subsribe(innerItem =&amp;gt; {
+            foo(innerItem);
+        })});
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;A usage example for such operators can be a search box (search box text changes as outer Observable) with a request being sent to a server for each search text change (HTTP responses as inner Observables). Another example is mouse button clicks (outer Observable) that trigger an interval timer for each mouse click (timer events as inner Observables).&lt;/p&gt;
+
+&lt;h2 id=&#34;learning-plan&#34;&gt;Learning plan&lt;/h2&gt;
+
+&lt;p&gt;To tackle these operators you need to understand more basic ones first. In this article I won&amp;rsquo;t give any definitions or explanations per se, but rather just a small learning plan with links:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/documentation/operators/map.html&#34;&gt;Map&lt;/a&gt;, &lt;a href=&#34;http://reactivex.io/documentation/operators/merge.html&#34;&gt;Merge&lt;/a&gt;, &lt;a href=&#34;http://reactivex.io/documentation/operators/concat&#34;&gt;Concat&lt;/a&gt;. Basic Observable operators.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mergeAll&#34;&gt;MergeAll&lt;/a&gt;, &lt;a href=&#34;http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-concatAll&#34;&gt;ConcatAll&lt;/a&gt;, &lt;a href=&#34;http://reactivex.io/documentation/operators/switch.html&#34;&gt;Switch&lt;/a&gt;. These are for higher order Observables already.&lt;/li&gt;
+&lt;li&gt;After that &lt;a href=&#34;http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mergeMap&#34;&gt;MergeMap&lt;/a&gt;, &lt;a href=&#34;http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-concatMap&#34;&gt;ConcatMap&lt;/a&gt;, and &lt;a href=&#34;http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-switchMap&#34;&gt;SwitchMap&lt;/a&gt; should be easy for you.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Operators from the third group are two step operators. First, they map outer Observable items to inner Observables. The second step is to merge a result set of inner Observables in some way. The way they are merged depends on the operator you use.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;mergeMap = map + mergeAll&lt;/li&gt;
+&lt;li&gt;concatMap = map + concatAll&lt;/li&gt;
+&lt;li&gt;switchMap = map + switch&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here are some pictures from &lt;a href=&#34;http://reactivex.io&#34;&gt;reactivex.io&lt;/a&gt; that I think are quite descriptive:&lt;/p&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/mergeMap.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/concatMap.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/switchMap.png&#34;&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;talk-is-cheap-show-me-the-code&#34;&gt;&amp;ldquo;Talk is cheap. Show me the code.&amp;rdquo;&lt;/h2&gt;
+
+&lt;p&gt;I still wasn&amp;rsquo;t sure I had cracked the difference between the discussed operators even after reading all the results from Google&amp;rsquo;s first page :)
+I&amp;rsquo;ve set up a small example on &lt;a href=&#34;https://jsfiddle.net/tolikcode/2uqrghy0/&#34;&gt;JsFiddle&lt;/a&gt; to see the difference in practice.&lt;/p&gt;
+
+&lt;p&gt;In the example, outer Observable emits three items with a one-second interval. Each item is then mapped to an inner Observable, which in its turn emits another three items with a one-second interval.
+The final result depends on the operator you use. Hope this small example will help you understand these operators without too much googling.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Any logs and Elasticsearch</title>
