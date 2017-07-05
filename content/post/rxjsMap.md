@@ -42,15 +42,15 @@ Operators from the third group are two step operators. First, they map outer Obs
 Here are some pictures from [reactivex.io](http://reactivex.io) that I think are quite descriptive:
 
 <div class="standardBorder verticalMargins" markdown="1">
-	<img src="/images/mergeMap.png">
+	<img src="/images/mergeMap.png" alt="MergeMap">
 </div>
 
 <div class="standardBorder verticalMargins" markdown="1">
-	<img src="/images/concatMap.png">
+	<img src="/images/concatMap.png" alt="ConcatMap">
 </div>
 
 <div class="standardBorder verticalMargins" markdown="1">
-	<img src="/images/switchMap.png">
+	<img src="/images/switchMap.png" alt="SwitchMap">
 </div>
 
 ## "Talk is cheap. Show me the code."
