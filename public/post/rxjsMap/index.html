@@ -68,13 +68,15 @@
 
 <h2 id="when-do-you-need-them">When do you need them?</h2>
 
-<p>All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. In my examples, initial Observable is called <strong>outer</strong> Observable. And items of the outer Observable are called <strong>inner</strong> Observables. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is <strong>not</strong> a recommended approach):</p>
+<p>All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is <strong>not</strong> a recommended approach):</p>
 
 <pre><code class="language-javascript">outerObservable.subscribe(outerItem =&gt; {
     outerItem.subsribe(innerItem =&gt; {
             foo(innerItem);
         })});
 </code></pre>
+
+<p>In my examples, initial Observable is called <strong>outer</strong> Observable. And items of the outer Observable are called <strong>inner</strong> Observables. Technically <strong>inner</strong> and <strong>outer</strong> Observables are just plain Observables.</p>
 
 <p>A usage example for such operators can be a search box (search box text changes as outer Observable) with a request being sent to a server for each search text change (HTTP responses as inner Observables). Another example is mouse button clicks (outer Observable) that trigger an interval timer for each mouse click (timer events as inner Observables).</p>
 
@@ -96,19 +98,51 @@
 <li>switchMap = map + switch</li>
 </ul>
 
-<p>Here are some pictures from <a href="http://reactivex.io">reactivex.io</a> that I think are quite descriptive:</p>
+<p>Here are some reworked <a href="http://reactivex.io">reactivex.io</a> diagrams. At first some explanations for the diagrams:</p>
+
+<div class="standardBorder verticalMargins" markdown="1">
+    <img src="/images/rxjsDiagram.png" alt="MergeMap">
+</div>
+
+<p>In these diagrams outer (initial) Observable emits circles. Each circle is then mapped to its own inner Observable - collection of rhombuses. Collections are identified by color; each collection has its own color. All those inner Observables are then merged into one final Observable - resulting collection of rhombuses.</p>
+
+<p><br></p>
 
 <div class="standardBorder verticalMargins" markdown="1">
     <img src="/images/mergeMap.png" alt="MergeMap">
 </div>
 
+<ul>
+<li><code>mergeMap</code> emits items into the resulting Observable just as they are emited from inner Observables. It doesn&rsquo;t wait for anything.</li>
+<li><code>mergeMap</code> doesn&rsquo;t preserve the order from outer Observable. Collections of rhombuses interleave.</li>
+<li><code>mergeMap</code> doesn&rsquo;t cancel any inner Observables. All rhombuses from inner Observables get to final collection.</li>
+</ul>
+
+<p><br></p>
+
 <div class="standardBorder verticalMargins" markdown="1">
     <img src="/images/concatMap.png" alt="ConcatMap">
 </div>
 
+<ul>
+<li><p><code>concatMap</code> waits for inner Observable to complete before taking items from the next inner Observable.</p></li>
+
+<li><p><code>concatMap</code> does preserve the order from outer Observable. Collections of rhombuses  don&rsquo;t interleave.</p></li>
+
+<li><p>Just as <code>mergeMap</code>, <code>concatMap</code> doesn&rsquo;t cancel any inner Observables. All rhombuses  from inner Observables get to the final collection.</p></li>
+</ul>
+
+<p><br></p>
+
 <div class="standardBorder verticalMargins" markdown="1">
     <img src="/images/switchMap.png" alt="SwitchMap">
 </div>
+
+<ul>
+<li><p><code>switchMap</code> emits items only from the most recent inner Observable.</p></li>
+
+<li><p><code>switchMap</code> cancells previous inner Observables when a new inner Observable appears. Items of inner Observable that were emited after the Observable was cancelled will be lost (not included in the resulting Observable).</p></li>
+</ul>
 
 <h2 id="talk-is-cheap-show-me-the-code">&ldquo;Talk is cheap. Show me the code.&rdquo;</h2>
 

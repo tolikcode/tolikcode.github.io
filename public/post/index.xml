@@ -25,13 +25,15 @@
 
 &lt;h2 id=&#34;when-do-you-need-them&#34;&gt;When do you need them?&lt;/h2&gt;
 
-&lt;p&gt;All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. In my examples, initial Observable is called &lt;strong&gt;outer&lt;/strong&gt; Observable. And items of the outer Observable are called &lt;strong&gt;inner&lt;/strong&gt; Observables. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is &lt;strong&gt;not&lt;/strong&gt; a recommended approach):&lt;/p&gt;
+&lt;p&gt;All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is &lt;strong&gt;not&lt;/strong&gt; a recommended approach):&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;outerObservable.subscribe(outerItem =&amp;gt; {
     outerItem.subsribe(innerItem =&amp;gt; {
             foo(innerItem);
         })});
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In my examples, initial Observable is called &lt;strong&gt;outer&lt;/strong&gt; Observable. And items of the outer Observable are called &lt;strong&gt;inner&lt;/strong&gt; Observables. Technically &lt;strong&gt;inner&lt;/strong&gt; and &lt;strong&gt;outer&lt;/strong&gt; Observables are just plain Observables.&lt;/p&gt;
 
 &lt;p&gt;A usage example for such operators can be a search box (search box text changes as outer Observable) with a request being sent to a server for each search text change (HTTP responses as inner Observables). Another example is mouse button clicks (outer Observable) that trigger an interval timer for each mouse click (timer events as inner Observables).&lt;/p&gt;
 
@@ -53,19 +55,51 @@
 &lt;li&gt;switchMap = map + switch&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Here are some pictures from &lt;a href=&#34;http://reactivex.io&#34;&gt;reactivex.io&lt;/a&gt; that I think are quite descriptive:&lt;/p&gt;
+&lt;p&gt;Here are some reworked &lt;a href=&#34;http://reactivex.io&#34;&gt;reactivex.io&lt;/a&gt; diagrams. At first some explanations for the diagrams:&lt;/p&gt;
+
+&lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/rxjsDiagram.png&#34; alt=&#34;MergeMap&#34;&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In these diagrams outer (initial) Observable emits circles. Each circle is then mapped to its own inner Observable - collection of rhombuses. Collections are identified by color; each collection has its own color. All those inner Observables are then merged into one final Observable - resulting collection of rhombuses.&lt;/p&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
     &lt;img src=&#34;https://tolikcode.github.io/images/mergeMap.png&#34; alt=&#34;MergeMap&#34;&gt;
 &lt;/div&gt;
 
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mergeMap&lt;/code&gt; emits items into the resulting Observable just as they are emited from inner Observables. It doesn&amp;rsquo;t wait for anything.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mergeMap&lt;/code&gt; doesn&amp;rsquo;t preserve the order from outer Observable. Collections of rhombuses interleave.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mergeMap&lt;/code&gt; doesn&amp;rsquo;t cancel any inner Observables. All rhombuses from inner Observables get to final collection.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
     &lt;img src=&#34;https://tolikcode.github.io/images/concatMap.png&#34; alt=&#34;ConcatMap&#34;&gt;
 &lt;/div&gt;
 
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;concatMap&lt;/code&gt; waits for inner Observable to complete before taking items from the next inner Observable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;concatMap&lt;/code&gt; does preserve the order from outer Observable. Collections of rhombuses  don&amp;rsquo;t interleave.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Just as &lt;code&gt;mergeMap&lt;/code&gt;, &lt;code&gt;concatMap&lt;/code&gt; doesn&amp;rsquo;t cancel any inner Observables. All rhombuses  from inner Observables get to the final collection.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
     &lt;img src=&#34;https://tolikcode.github.io/images/switchMap.png&#34; alt=&#34;SwitchMap&#34;&gt;
 &lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;switchMap&lt;/code&gt; emits items only from the most recent inner Observable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;code&gt;switchMap&lt;/code&gt; cancells previous inner Observables when a new inner Observable appears. Items of inner Observable that were emited after the Observable was cancelled will be lost (not included in the resulting Observable).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&#34;talk-is-cheap-show-me-the-code&#34;&gt;&amp;ldquo;Talk is cheap. Show me the code.&amp;rdquo;&lt;/h2&gt;
 

@@ -13,7 +13,7 @@ Here's an [example at JsFiddle](https://jsfiddle.net/tolikcode/2uqrghy0/) showin
 
 ## When do you need them?
 
-All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. In my examples, initial Observable is called **outer** Observable. And items of the outer Observable are called **inner** Observables. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is **not** a recommended approach): 
+All these operators are used with so-called higher order Observables. This is when items of an Observable are Observables themselves (or they are mapped to Observables) and we need to flatten all of them into one final Observable. You can easily identify this situation when you subscribe to an Observable inside subscription to another Observable (Note: this is **not** a recommended approach): 
 
 ~~~ javascript
 outerObservable.subscribe(outerItem => {
@@ -21,6 +21,8 @@ outerObservable.subscribe(outerItem => {
             foo(innerItem);
         })});
 ~~~
+
+In my examples, initial Observable is called **outer** Observable. And items of the outer Observable are called **inner** Observables. Technically **inner** and **outer** Observables are just plain Observables.
 
 A usage example for such operators can be a search box (search box text changes as outer Observable) with a request being sent to a server for each search text change (HTTP responses as inner Observables). Another example is mouse button clicks (outer Observable) that trigger an interval timer for each mouse click (timer events as inner Observables).
 
@@ -39,19 +41,45 @@ Operators from the third group are two step operators. First, they map outer Obs
 - concatMap = map + concatAll
 - switchMap = map + switch
 
-Here are some pictures from [reactivex.io](http://reactivex.io) that I think are quite descriptive:
+Here are some reworked [reactivex.io](http://reactivex.io) diagrams. At first some explanations for the diagrams:
+
+<div class="standardBorder verticalMargins" markdown="1">
+	<img src="/images/rxjsDiagram.png" alt="MergeMap">
+</div>
+
+In these diagrams outer (initial) Observable emits circles. Each circle is then mapped to its own inner Observable - collection of rhombuses. Collections are identified by color; each collection has its own color. All those inner Observables are then merged into one final Observable - resulting collection of rhombuses.
+
+<br>
 
 <div class="standardBorder verticalMargins" markdown="1">
 	<img src="/images/mergeMap.png" alt="MergeMap">
 </div>
 
+- `mergeMap` emits items into the resulting Observable just as they are emited from inner Observables. It doesn't wait for anything.
+- `mergeMap` doesn't preserve the order from outer Observable. Collections of rhombuses interleave.
+- `mergeMap` doesn't cancel any inner Observables. All rhombuses from inner Observables get to final collection.
+
+<br>
+
 <div class="standardBorder verticalMargins" markdown="1">
 	<img src="/images/concatMap.png" alt="ConcatMap">
 </div>
 
+- `concatMap` waits for inner Observable to complete before taking items from the next inner Observable.
+
+- `concatMap` does preserve the order from outer Observable. Collections of rhombuses  don't interleave.
+
+- Just as `mergeMap`, `concatMap` doesn't cancel any inner Observables. All rhombuses  from inner Observables get to the final collection.
+
+<br>
+
 <div class="standardBorder verticalMargins" markdown="1">
 	<img src="/images/switchMap.png" alt="SwitchMap">
 </div>
+
+- `switchMap` emits items only from the most recent inner Observable.
+
+- `switchMap` cancells previous inner Observables when a new inner Observable appears. Items of inner Observable that were emited after the Observable was cancelled will be lost (not included in the resulting Observable).
 
 ## "Talk is cheap. Show me the code."
 
