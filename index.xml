@@ -56,15 +56,15 @@
 &lt;p&gt;Here are some pictures from &lt;a href=&#34;http://reactivex.io&#34;&gt;reactivex.io&lt;/a&gt; that I think are quite descriptive:&lt;/p&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;https://tolikcode.github.io/images/mergeMap.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/mergeMap.png&#34; alt=&#34;MergeMap&#34;&gt;
 &lt;/div&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;https://tolikcode.github.io/images/concatMap.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/concatMap.png&#34; alt=&#34;ConcatMap&#34;&gt;
 &lt;/div&gt;
 
 &lt;div class=&#34;standardBorder verticalMargins&#34; markdown=&#34;1&#34;&gt;
-    &lt;img src=&#34;https://tolikcode.github.io/images/switchMap.png&#34;&gt;
+    &lt;img src=&#34;https://tolikcode.github.io/images/switchMap.png&#34; alt=&#34;SwitchMap&#34;&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&#34;talk-is-cheap-show-me-the-code&#34;&gt;&amp;ldquo;Talk is cheap. Show me the code.&amp;rdquo;&lt;/h2&gt;
