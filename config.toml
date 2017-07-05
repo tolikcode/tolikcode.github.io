@@ -2,6 +2,7 @@ baseurl = "https://tolikcode.github.io"
 languageCode = "en-us"
 title = "Tolik Code"
 theme = "shiori"
+disqusShortname = "tolikcode"
 
 [params]
   github = "tolikcode"

@@ -8,6 +8,9 @@
     <div class="post-content">
       {{ .Content }}
     </div>
+    <div>
+      {{ template "_internal/disqus.html" . }}
+    </div>
     <div class="post-footer">
       {{ partial "post-footer.html" . }}
     </div>
