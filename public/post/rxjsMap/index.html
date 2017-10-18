@@ -9,7 +9,7 @@
     <link href='//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="https://tolikcode.github.io/favicon.ico">
-    <title>mergeMap vs concatMap vs switchMap | Tolik Code</title>
+    <title>mergeMap vs flatMap vs concatMap vs switchMap | Tolik Code</title>
     
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/agate.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
@@ -53,18 +53,14 @@
 <div class="row">
   <div class="col-sm-8">
     <div class="post-header">
-      <h1 class="post-title-main">mergeMap vs concatMap vs switchMap</h1>
+      <h1 class="post-title-main">mergeMap vs flatMap vs concatMap vs switchMap</h1>
       <p class="text-muted">Jun 28, 2017</p>
 
     </div>
     <div class="post-content">
-      <p>Today we&rsquo;re going to look at the difference between these three <a href="http://reactivex.io/rxjs/">RxJS</a> operators. This might be an obvious thing for someone doing reactive programming in their daily job. But for me, it took a few hours to play with these operators to thoroughly understand them. So I&rsquo;ve decided to spend a few more hours in writing a blog post about it :)</p>
+      <p>Today we&rsquo;re going to look at the difference between these <del>four</del> three <a href="http://reactivex.io/rxjs/">RxJS</a> operators. The simple part is that <code>flatMap</code> is just an alias for <code>mergeMap</code>. Other operators have a difference that might be important in some cases.</p>
 
 <p></p>
-
-<h2 id="tl-dr">TL;DR</h2>
-
-<p>Here&rsquo;s an <a href="https://jsfiddle.net/tolikcode/2uqrghy0/">example at JsFiddle</a> showing the difference between the operators.</p>
 
 <h2 id="when-do-you-need-them">When do you need them?</h2>
 
@@ -113,7 +109,7 @@
 </div>
 
 <ul>
-<li><code>mergeMap</code> emits items into the resulting Observable just as they are emited from inner Observables. It doesn&rsquo;t wait for anything.</li>
+<li><code>mergeMap</code> emits items into the resulting Observable just as they are emitted from inner Observables. It doesn&rsquo;t wait for anything.</li>
 <li><code>mergeMap</code> doesn&rsquo;t preserve the order from outer Observable. Collections of rhombuses interleave.</li>
 <li><code>mergeMap</code> doesn&rsquo;t cancel any inner Observables. All rhombuses from inner Observables get to final collection.</li>
 </ul>
@@ -141,7 +137,7 @@
 <ul>
 <li><p><code>switchMap</code> emits items only from the most recent inner Observable.</p></li>
 
-<li><p><code>switchMap</code> cancells previous inner Observables when a new inner Observable appears. Items of inner Observable that were emited after the Observable was cancelled will be lost (not included in the resulting Observable).</p></li>
+<li><p><code>switchMap</code> cancels previous inner Observables when a new inner Observable appears. Items of inner Observable that were emitted after the Observable was canceled will be lost (not included in the resulting Observable).</p></li>
 </ul>
 
 <h2 id="talk-is-cheap-show-me-the-code">&ldquo;Talk is cheap. Show me the code.&rdquo;</h2>
@@ -151,13 +147,21 @@ I&rsquo;ve set up a small example on <a href="https://jsfiddle.net/tolikcode/2uq
 
 <p>In the example, outer Observable emits three items with a one-second interval. Each item is then mapped to an inner Observable, which in its turn emits another three items with a one-second interval.
 The final result depends on the operator you use. Hope this small example will help you understand these operators without too much googling.</p>
+
+<h2 id="bonus">Bonus</h2>
+
+<p>Some visualizations for Rx Observables:</p>
+
+<p><a href="https://rxviz.com/">Rx Visualizer</a></p>
+
+<p><a href="http://rxmarbles.com">RxJS Marbles</a></p>
     </div>
     <div>
       <div id="disqus_thread"></div>
 <script type="text/javascript">
     var disqus_shortname = 'tolikcode';
     var disqus_identifier = 'https:\/\/tolikcode.github.io\/post\/rxjsMap\/';
-    var disqus_title = 'mergeMap vs concatMap vs switchMap';
+    var disqus_title = 'mergeMap vs flatMap vs concatMap vs switchMap';
     var disqus_url = 'https:\/\/tolikcode.github.io\/post\/rxjsMap\/';
 
     (function() {

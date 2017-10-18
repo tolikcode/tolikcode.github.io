@@ -1,15 +1,12 @@
 +++
 date = "2017-06-28"
-title = "mergeMap vs concatMap vs switchMap"
+title = "mergeMap vs flatMap vs concatMap vs switchMap"
 
 +++
 
-Today we're going to look at the difference between these three [RxJS](http://reactivex.io/rxjs/) operators. This might be an obvious thing for someone doing reactive programming in their daily job. But for me, it took a few hours to play with these operators to thoroughly understand them. So I've decided to spend a few more hours in writing a blog post about it :)
+Today we're going to look at the difference between these ~~four~~ three [RxJS](http://reactivex.io/rxjs/) operators. The simple part is that `flatMap` is just an alias for `mergeMap`. Other operators have a difference that might be important in some cases.
 
 <!--more-->
-
-## TL;DR
-Here's an [example at JsFiddle](https://jsfiddle.net/tolikcode/2uqrghy0/) showing the difference between the operators.
 
 ## When do you need them?
 
@@ -55,7 +52,7 @@ In these diagrams outer (initial) Observable emits circles. Each circle is then 
 	<img src="/images/mergeMap.png" alt="MergeMap">
 </div>
 
-- `mergeMap` emits items into the resulting Observable just as they are emited from inner Observables. It doesn't wait for anything.
+- `mergeMap` emits items into the resulting Observable just as they are emitted from inner Observables. It doesn't wait for anything.
 - `mergeMap` doesn't preserve the order from outer Observable. Collections of rhombuses interleave.
 - `mergeMap` doesn't cancel any inner Observables. All rhombuses from inner Observables get to final collection.
 
@@ -79,7 +76,7 @@ In these diagrams outer (initial) Observable emits circles. Each circle is then 
 
 - `switchMap` emits items only from the most recent inner Observable.
 
-- `switchMap` cancells previous inner Observables when a new inner Observable appears. Items of inner Observable that were emited after the Observable was cancelled will be lost (not included in the resulting Observable).
+- `switchMap` cancels previous inner Observables when a new inner Observable appears. Items of inner Observable that were emitted after the Observable was canceled will be lost (not included in the resulting Observable).
 
 ## "Talk is cheap. Show me the code."
 
@@ -88,3 +85,11 @@ I've set up a small example on [JsFiddle](https://jsfiddle.net/tolikcode/2uqrghy
 
 In the example, outer Observable emits three items with a one-second interval. Each item is then mapped to an inner Observable, which in its turn emits another three items with a one-second interval.
 The final result depends on the operator you use. Hope this small example will help you understand these operators without too much googling.
+
+## Bonus
+
+Some visualizations for Rx Observables:
+
+[Rx Visualizer](https://rxviz.com/)
+
+[RxJS Marbles](http://rxmarbles.com)
