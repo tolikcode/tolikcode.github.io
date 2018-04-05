@@ -13,10 +13,10 @@
     
     <item>
       <title>mergeMap vs flatMap vs concatMap vs switchMap</title>
-      <link>https://tolikcode.github.io/post/rxjsmap/</link>
+      <link>https://tolikcode.github.io/post/rxjs-map/</link>
       <pubDate>Wed, 28 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://tolikcode.github.io/post/rxjsmap/</guid>
+      <guid>https://tolikcode.github.io/post/rxjs-map/</guid>
       <description>&lt;p&gt;Today we&amp;rsquo;re going to look at the difference between these &lt;del&gt;four&lt;/del&gt; three &lt;a href=&#34;http://reactivex.io/rxjs/&#34;&gt;RxJS&lt;/a&gt; operators. The simple part is that &lt;code&gt;flatMap&lt;/code&gt; is just an alias for &lt;code&gt;mergeMap&lt;/code&gt;. Other operators have a difference that might be important in some cases.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
@@ -56,10 +56,10 @@ Logstash Logstash is a general purpose ETL (Extract-Transform-Load) tool, consis
     
     <item>
       <title>Taking the trash out with PowerShell</title>
-      <link>https://tolikcode.github.io/post/recyclebinpowershell/</link>
+      <link>https://tolikcode.github.io/post/recyclebin-powershell/</link>
       <pubDate>Sun, 15 Nov 2015 11:12:12 +0200</pubDate>
       
-      <guid>https://tolikcode.github.io/post/recyclebinpowershell/</guid>
+      <guid>https://tolikcode.github.io/post/recyclebin-powershell/</guid>
       <description>&lt;p&gt;Many Windows users tend to store all of their old unnecessary files in the Recycle Bin. However, it just irritates me to know that files I almost definitely won&amp;rsquo;t ever need are still taking space up on my hard drive. Immediately deleting these files bypassing the Recycle Bin is also not an option here.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
@@ -78,20 +78,20 @@ Email me at tolikcode@gmail.com.</description>
     
     <item>
       <title>Logging in Universal Windows applications</title>
-      <link>https://tolikcode.github.io/post/uwplogging/</link>
+      <link>https://tolikcode.github.io/post/uwp-logging/</link>
       <pubDate>Sat, 24 Oct 2015 23:23:55 +0300</pubDate>
       
-      <guid>https://tolikcode.github.io/post/uwplogging/</guid>
+      <guid>https://tolikcode.github.io/post/uwp-logging/</guid>
       <description>As a Windows Phone developer I always envied Android developers with their quite handy out of the box logging solution, namely LogCat. It allows both to output debug information in real time and to write it somewhere permanently.
 With Windows 10 being released I was hoping to have something similar to Android LogCat in Windows. Alas, there are a few changes to ETW Tracing and that&amp;rsquo;s all. If your have a Windows Phone / Window 8 development experience there is going to be nothing new for you.</description>
     </item>
     
     <item>
       <title>Hosting a Hugo generated site on GitHub</title>
-      <link>https://tolikcode.github.io/post/hugoongithub/</link>
+      <link>https://tolikcode.github.io/post/hugo-on-github/</link>
       <pubDate>Sun, 04 Oct 2015 21:01:22 +0300</pubDate>
       
-      <guid>https://tolikcode.github.io/post/hugoongithub/</guid>
+      <guid>https://tolikcode.github.io/post/hugo-on-github/</guid>
       <description>The reason I like Hugo so much is partly because of its great documentation. Yet I do believe that Hosting on GitHub tutorial can be improved a little. It contains some redundant information on how to create a blog with Hugo and focuses on GitHub Project Pages for the most part. It does provide you with steps on how to host a personal blog on GitHub User Pages, but this solution requires separate repositories for your blog&amp;rsquo;s source and generated static result.</description>
     </item>
     
