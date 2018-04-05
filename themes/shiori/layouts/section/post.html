@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-sm-8">
     <div class="page-archive">
-      {{ range .Site.Pages.ByDate.Reverse }}
+      {{ range .Data.Pages.ByDate.Reverse }}
         {{ if eq .Type "post" }}
           {{ $post_month_year := .Date.Format "January 2006" }}
           {{ if .NextInSection }}
