@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://tolikcode.github.io/post/rxjsMap/</loc>
+    <loc>https://tolikcode.github.io/post/rxjsmap/</loc>
     <lastmod>2017-06-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -22,7 +23,7 @@
   </url>
   
   <url>
-    <loc>https://tolikcode.github.io/post/recycleBinPowerShell/</loc>
+    <loc>https://tolikcode.github.io/post/recyclebinpowershell/</loc>
     <lastmod>2015-11-15T11:12:12+02:00</lastmod>
   </url>
   
@@ -32,18 +33,28 @@
   </url>
   
   <url>
-    <loc>https://tolikcode.github.io/post/uwpLogging/</loc>
+    <loc>https://tolikcode.github.io/post/uwplogging/</loc>
     <lastmod>2015-10-24T23:23:55+03:00</lastmod>
   </url>
   
   <url>
-    <loc>https://tolikcode.github.io/post/hugoOnGitHub/</loc>
+    <loc>https://tolikcode.github.io/post/hugoongithub/</loc>
     <lastmod>2015-10-04T21:01:22+03:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tolikcode.github.io/categories/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://tolikcode.github.io/post/</loc>
     <lastmod>2017-06-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://tolikcode.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
